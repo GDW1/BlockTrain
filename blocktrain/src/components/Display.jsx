@@ -7,7 +7,6 @@ function Display() {
 
     return (
         <div className={"displayComponent"}>
-            <h1>hi</h1>
             <div className="train">
                 <h1> Train </h1>
                 <table id = "trainCars">
@@ -19,32 +18,32 @@ function Display() {
                         </td>
                         <td>
                             <div>
-                                <p>can</p>
+                                <p>{sampleData[1]}</p>
                             </div>
                         </td>
                         <td>
                             <div>
-                                <p>go</p>
+                                <p>{sampleData[2]}</p>
                             </div>
                         </td>
                         <td>
                             <div>
-                                <p>and</p>
+                                <p>{sampleData[3]}</p>
                             </div>
                         </td>
                         <td>
                             <div>
-                                <p>so</p>
+                                <p>{sampleData[4]}</p>
                             </div>
                         </td>
                         <td>
                             <div>
-                                <p>can</p>
+                                <p>{sampleData[5]}</p>
                             </div>
                         </td>
                         <td>
                             <div>
-                                <p>she</p>
+                                <p>{sampleData[6]}</p>
                             </div>
                         </td>
                     </tr>
