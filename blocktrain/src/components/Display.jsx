@@ -1,14 +1,19 @@
+/* Filename: Display.jsx; Last Updated: 10/17/2021
+ * Display.jsx displays the words from the last 7 blocks of the blockchain into train cars
+ */
+
 import React, { useState } from 'react'
 import './Display.css';
 
+// SAMPLE DATA. CHANGE WHEN REAL DATA AVAILABLE
 const sampleData = ["he", "can", "go", "and", "she", "can", "to"]
 
+// NOTE: NEED TO ENSURE THAT CHARACTERS ARE ONLY 10 CHARS LONG AND TRAIN CAR CAN ACCOMMODATE THAT
 function Display() {
 
     return (
         <div className={"displayComponent"}>
             <div className="train">
-                <h1> Train </h1>
                 <table id = "trainCars">
                     <tr>
                         <td>
