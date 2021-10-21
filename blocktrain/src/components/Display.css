@@ -21,19 +21,25 @@
 }
 
 #trainCars tr td div{
-    width: 100%;
-    height: 20%;
-    border-radius: 1%;
+
+    font-size: 18px;
     background-color: var(--firstAccent);
     text-align: -webkit-center;
-    margin-right: 4%;
-    margin-left: 1%;
-    padding-top: 2%;
-    padding-bottom: 2%;
-    font-size: 18pt;
+    position: relative;
+}
+#trainCars tr td div p{
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    font-weight: bold;
+    font-size: 1vw;
+    transform: translate(-50%, -250%);
 }
 
-.trainCarImage{
+#trainCars tr td div img{
+    width: 100%;
+    height: 100%;
     background-color: transparent;
-
 }
+
+

@@ -4,6 +4,7 @@
 
 import React, { useState } from 'react'
 import './Display.css';
+import trainArt from '../images/TrainCar.png'
 
 // SAMPLE DATA. CHANGE WHEN REAL DATA AVAILABLE
 const sampleData = ["he", "can", "go", "and", "she", "can", "to"]
@@ -18,36 +19,43 @@ function Display() {
                     <tr>
                         <td>
                             <div>
+                                <img className = "trainCarImage" src = {trainArt} alt = "train car" />
                                 <p>{sampleData[0]}</p>
                             </div>
                         </td>
                         <td>
                             <div>
+                                <img className = "trainCarImage" src = {trainArt} alt = "train car" />
                                 <p>{sampleData[1]}</p>
                             </div>
                         </td>
                         <td>
                             <div>
+                                <img className = "trainCarImage" src = {trainArt} alt = "train car" />
                                 <p>{sampleData[2]}</p>
                             </div>
                         </td>
                         <td>
                             <div>
+                                <img className = "trainCarImage" src = {trainArt} alt = "train car" />
                                 <p>{sampleData[3]}</p>
                             </div>
                         </td>
                         <td>
                             <div>
+                                <img className = "trainCarImage" src = {trainArt} alt = "train car" />
                                 <p>{sampleData[4]}</p>
                             </div>
                         </td>
                         <td>
                             <div>
+                                <img className = "trainCarImage" src = {trainArt} alt = "train car" />
                                 <p>{sampleData[5]}</p>
                             </div>
                         </td>
                         <td>
                             <div>
+                                <img className = "trainCarImage" src = {trainArt} alt = "train car" />
                                 <p>{sampleData[6]}</p>
                             </div>
                         </td>
