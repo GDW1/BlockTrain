@@ -1,13 +1,13 @@
 .headerBlock{
-    background-color: var(--secondAccent);
-    color: #fcbf49;
+    background-color: var(--secondary);
+    color: var(--secondAccent);
     width: 100%;
     font-size: 4vw;
     margin-top: -4.5%;
+    font-family: montserrat, sans-serif;
 }
 
 .bold{
-    font-weight: bold;
-    color: #d62828;
-
+    font-weight: 999;
+    color: var(--firstAccent);
 }
