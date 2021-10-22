@@ -1,4 +1,4 @@
-/* Filename: Header.jsx; Last Updated: 10/21/2021
+/* Filename: Header.jsx; Last Updated: 10/22/2021
  * Header.jsx displays the logo and top bar
  */
 
