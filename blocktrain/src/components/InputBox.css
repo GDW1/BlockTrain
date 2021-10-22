@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap');
+* {
+    font-family: "Montserrat", monospace;
+}
+#InputSubmitButton{
+    box-sizing: border-box;
+    font-size: 24px;
+    font-weight: bold;
+    height:40px;
+        
+    min-width: 110px;
+    display:inline-block;
+    position: relative;
+    
+    border-radius:7px;
+    border:1px solid black;
+    
+}
+#InputSubmitButton:hover{
+    border:3px solid black;
+}
+#InputSubmitButton:active{
+    background-color: darkgray;
+}
+.InputBox{
+    text-align:center;
+    box-sizing: border-box;
+    display:inline-block;
+    font-size: 24px;
+    width: 75%;
+    height:40px;
+    border-radius:7px;
+    border:1px solid black;
+    
+}
+
+.InputField{
+    margin: auto;
+    width: 40%;
+    text-align: center;
+
+}
