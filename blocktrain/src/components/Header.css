@@ -1,0 +1,13 @@
+.headerBlock{
+    background-color: var(--secondAccent);
+    color: #fcbf49;
+    width: 100%;
+    font-size: 4vw;
+    margin-top: -4.5%;
+}
+
+.bold{
+    font-weight: bold;
+    color: #d62828;
+
+}

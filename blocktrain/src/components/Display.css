@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap%27');
 
 :root{
-    --primary: #C3EEFF;
+    --primary: #eae2b7;
     --secondary: #C3EEFF;
     --tertiary: rgb(160, 160, 160);
     --firstAccent: #CABBE9;
-    --secondAccent: rgb(160, 160, 160);
+    --secondAccent: #003049;
 }
 
 .train{
