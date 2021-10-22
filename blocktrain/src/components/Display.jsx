@@ -7,7 +7,7 @@ import './Display.css';
 import trainArt from '../images/TrainCar.png'
 
 // SAMPLE DATA. CHANGE WHEN REAL DATA AVAILABLE
-const sampleData = ["he", "can", "go", "and", "she", "can", "to"]
+const sampleData = ["he", "can", "go", "and", "she", "can", "too"]
 
 // NOTE: NEED TO ENSURE THAT CHARACTERS ARE ONLY 10 CHARS LONG AND TRAIN CAR CAN ACCOMMODATE THAT
 function Display() {
