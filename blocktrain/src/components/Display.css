@@ -1,13 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap%27');
 
-:root{
-    --primary: #C3EEFF;
-    --secondary: #C3EEFF;
-    --tertiary: rgb(160, 160, 160);
-    --firstAccent: #CABBE9;
-    --secondAccent: rgb(160, 160, 160);
-}
-
 .train{
     text-align: -webkit-center;
     width: 100%;
