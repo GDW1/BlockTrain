@@ -1,10 +1,19 @@
+:root{
+  --primary: #F6F2DF;
+  --secondary: #00283D;
+  --firstAccent: #D93030;
+  --secondAccent: #FF931F;
+}
+
 .App {
   text-align: center;
+
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -39,4 +48,5 @@
 
 body{
   background-color: var(--primary);
+  overflow: hidden; /*THIS DISABLES SCROLLING*/
 }

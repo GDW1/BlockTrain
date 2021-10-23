@@ -1,0 +1,16 @@
+.headerBlock{
+    background-color: var(--secondary);
+    color: var(--secondAccent);
+    width: 100%;
+    font-size: 4vw;
+    margin-top: -4.5%;
+    padding-top: 1%;
+    padding-bottom: 0.001%;
+    margin-bottom: 0%;
+    font-family: montserrat, sans-serif;
+}
+
+.bold{
+    font-weight: 999;
+    color: var(--firstAccent);
+}
