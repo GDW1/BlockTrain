@@ -50,7 +50,8 @@ function InputBox(props){
                 <input 
                 id="next_word"
                 name="next_word" 
-                className = "InputBox" 
+                className = "InputBox"
+                placeholder="Enter your word" 
                 type = "text" 
                 minLength = "1" 
                 maxLength = "20"
