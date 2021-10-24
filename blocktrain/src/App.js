@@ -5,6 +5,7 @@ import Display from './components/Display.jsx'
 import InputBox from './components/InputBox';
 
 function App() {
+  
   return (
     <div className="App">
         <Header/>
