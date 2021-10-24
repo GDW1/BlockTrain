@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import ReactDOM from 'react-dom';
 import './InputBox.css';
 import validator from 'validator';
 import axios from 'axios';
@@ -32,7 +31,9 @@ function InputBox(props){
             next_word.toString()
         );
         if (validation.isValid){
-            alert('The word you entered was: ' + next_word.toString())
+            //alert('The word you entered was: ' + next_word.toString())
+            //define setUpdate
+            props.setUpdate(true);
             axios.post("http://localhost:3000/trainwords", {
                 "word": next_word.toString()
             })
@@ -47,7 +48,7 @@ function InputBox(props){
             );
             alert("Input Invalid\n" + bigMessage);
         }
-        document.getElementById("next_word").value = "";
+        setWord("");
     }
     //implement some client side validation
     return (

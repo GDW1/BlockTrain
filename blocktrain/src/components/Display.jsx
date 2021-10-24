@@ -2,7 +2,7 @@
  * Display.jsx displays the words from the last 7 blocks of the blockchain into train cars
  */
 
-import React, { useState } from 'react'
+import React from 'react'
 import './Display.css';
 import trainArt from '../images/TrainCar.png'
 import axios from 'axios';
@@ -15,35 +15,46 @@ import axios from 'axios';
 class Display extends React.Component{
     constructor(props){
         super(props);
-        this.sampleData = ["", "", "", "", "", "", ""];
+        //console.log(this.props);
+        this.state = {sampleData: ["", "", "", "", "", "", ""]};
     };
-    
+    pullData(){
+        //console.log("pulling");
+        const url = "http://localhost:3000/trainwords";
+        axios.get(url)
+            .then(
+                (res) => {
+                    let rawData = JSON.parse(JSON.stringify(res.data));
+                    let newData = [];
+                    for (let i = 0; i < 7; i++){
+                        newData.push(rawData[rawData.length - 1 - i].word);
+                    }
+                    //This should technically use setState but it refuses to work for some reason
+                    // this.sampleData = newData;
+                    // this.forceUpdate();
+                    this.setState({sampleData: newData});
+                    
+                }
+
+            )
+    }
     componentDidMount(){
         this.checkInterval = setInterval(() => {
             //SET BACKEND URL HERE
-            const url = "http://localhost:3000/trainwords";
-            axios.get(url)
-                .then(
-                    (res) => {
-                        let rawData = JSON.parse(JSON.stringify(res.data));
-                        let newData = [];
-                        for (let i = 0; i < 7; i++){
-                            newData.push(rawData[rawData.length - 1 - i].word);
-                        }
-                        //This should technically use setState but it refuses to work for some reason
-                        this.sampleData = newData;
-                        this.forceUpdate();
-                        
-                    }
-
-                )
+            this.pullData();
         }, 3000);
     }
     componentWillUnmount(){
         clearInterval(this.checkInterval);
     }
     render() {
-        
+        //console.log(this.props.update);
+        //console.log("rendering");
+        if (this.props.update){
+            //console.log("updating");
+            this.pullData();
+            this.props.setUpdate(false);
+        }
         return (
             <div className={"displayComponent"}>
                 <div className="train">
@@ -52,43 +63,43 @@ class Display extends React.Component{
                             <td>
                                 <div>
                                     <img className = "trainCarImage" src = {trainArt} alt = "train car" />
-                                    <p>{this.sampleData[6]}</p>
+                                    <p>{this.state.sampleData[6]}</p>
                                 </div>
                             </td>
                             <td>
                                 <div>
                                     <img className = "trainCarImage" src = {trainArt} alt = "train car" />
-                                    <p>{this.sampleData[5]}</p>
+                                    <p>{this.state.sampleData[5]}</p>
                                 </div>
                             </td>
                             <td>
                                 <div>
                                     <img className = "trainCarImage" src = {trainArt} alt = "train car" />
-                                    <p>{this.sampleData[4]}</p>
+                                    <p>{this.state.sampleData[4]}</p>
                                 </div>
                             </td>
                             <td>
                                 <div>
                                     <img className = "trainCarImage" src = {trainArt} alt = "train car" />
-                                    <p>{this.sampleData[3]}</p>
+                                    <p>{this.state.sampleData[3]}</p>
                                 </div>
                             </td>
                             <td>
                                 <div>
                                     <img className = "trainCarImage" src = {trainArt} alt = "train car" />
-                                    <p>{this.sampleData[2]}</p>
+                                    <p>{this.state.sampleData[2]}</p>
                                 </div>
                             </td>
                             <td>
                                 <div>
                                     <img className = "trainCarImage" src = {trainArt} alt = "train car" />
-                                    <p>{this.sampleData[1]}</p>
+                                    <p>{this.state.sampleData[1]}</p>
                                 </div>
                             </td>
                             <td>
                                 <div>
                                     <img className = "trainCarImage" src = {trainArt} alt = "train car" />
-                                    <p>{this.sampleData[0]}</p>
+                                    <p>{this.state.sampleData[0]}</p>
                                 </div>
                             </td>
                         </tr>
