@@ -5,65 +5,99 @@
 import React, { useState } from 'react'
 import './Display.css';
 import trainArt from '../images/TrainCar.png'
+import axios from 'axios';
 
 // SAMPLE DATA. CHANGE WHEN REAL DATA AVAILABLE
-const sampleData = ["he", "can", "go", "and", "she", "can", "too"]
 
-// NOTE: NEED TO ENSURE THAT CHARACTERS ARE ONLY 10 CHARS LONG AND TRAIN CAR CAN ACCOMMODATE THAT
-function Display() {
 
-    return (
-        <div className={"displayComponent"}>
-            <div className="train">
-                <table id = "trainCars">
-                    <tr>
-                        <td>
-                            <div>
-                                <img className = "trainCarImage" src = {trainArt} alt = "train car" />
-                                <p>{sampleData[0]}</p>
-                            </div>
-                        </td>
-                        <td>
-                            <div>
-                                <img className = "trainCarImage" src = {trainArt} alt = "train car" />
-                                <p>{sampleData[1]}</p>
-                            </div>
-                        </td>
-                        <td>
-                            <div>
-                                <img className = "trainCarImage" src = {trainArt} alt = "train car" />
-                                <p>{sampleData[2]}</p>
-                            </div>
-                        </td>
-                        <td>
-                            <div>
-                                <img className = "trainCarImage" src = {trainArt} alt = "train car" />
-                                <p>{sampleData[3]}</p>
-                            </div>
-                        </td>
-                        <td>
-                            <div>
-                                <img className = "trainCarImage" src = {trainArt} alt = "train car" />
-                                <p>{sampleData[4]}</p>
-                            </div>
-                        </td>
-                        <td>
-                            <div>
-                                <img className = "trainCarImage" src = {trainArt} alt = "train car" />
-                                <p>{sampleData[5]}</p>
-                            </div>
-                        </td>
-                        <td>
-                            <div>
-                                <img className = "trainCarImage" src = {trainArt} alt = "train car" />
-                                <p>{sampleData[6]}</p>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
+
+
+class Display extends React.Component{
+    constructor(props){
+        super(props);
+        this.sampleData = ["", "", "", "", "", "", ""];
+    };
+    
+    componentDidMount(){
+        this.checkInterval = setInterval(() => {
+            //SET BACKEND URL HERE
+            const url = "http://localhost:3000/trainwords";
+            axios.get(url)
+                .then(
+                    (res) => {
+                        let rawData = JSON.parse(JSON.stringify(res.data));
+                        let newData = [];
+                        for (let i = 0; i < 7; i++){
+                            newData.push(rawData[rawData.length - 1 - i].word);
+                        }
+                        //This should technically use setState but it refuses to work for some reason
+                        this.sampleData = newData;
+                        this.forceUpdate();
+                        
+                    }
+
+                )
+        }, 3000);
+    }
+    componentWillUnmount(){
+        clearInterval(this.checkInterval);
+    }
+    render() {
+        
+        return (
+            <div className={"displayComponent"}>
+                <div className="train">
+                    <table id = "trainCars">
+                        <tr>
+                            <td>
+                                <div>
+                                    <img className = "trainCarImage" src = {trainArt} alt = "train car" />
+                                    <p>{this.sampleData[6]}</p>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <img className = "trainCarImage" src = {trainArt} alt = "train car" />
+                                    <p>{this.sampleData[5]}</p>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <img className = "trainCarImage" src = {trainArt} alt = "train car" />
+                                    <p>{this.sampleData[4]}</p>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <img className = "trainCarImage" src = {trainArt} alt = "train car" />
+                                    <p>{this.sampleData[3]}</p>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <img className = "trainCarImage" src = {trainArt} alt = "train car" />
+                                    <p>{this.sampleData[2]}</p>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <img className = "trainCarImage" src = {trainArt} alt = "train car" />
+                                    <p>{this.sampleData[1]}</p>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <img className = "trainCarImage" src = {trainArt} alt = "train car" />
+                                    <p>{this.sampleData[0]}</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
+// NOTE: NEED TO ENSURE THAT CHARACTERS ARE ONLY 10 CHARS LONG AND TRAIN CAR CAN ACCOMMODATE THAT
 
 export default Display

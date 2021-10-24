@@ -33,8 +33,8 @@ function InputBox(props){
         );
         if (validation.isValid){
             alert('The word you entered was: ' + next_word.toString())
-            axios.post("http://localhost:3000/posts", {
-                word: next_word.toString()
+            axios.post("http://localhost:3000/trainwords", {
+                "word": next_word.toString()
             })
             .then(res => console.log(res))
             .catch(err => console.log(err))
