@@ -4,7 +4,7 @@
 
 import React, { useState } from 'react'
 import './Header.css';
-import threeBarIcon from '../images/three-bar-menu-icon-13.png';
+import threeBarIcon from '../images/three-bar-menu-icon-3.png';
 
 function Header() {
 
