@@ -5,6 +5,7 @@
 import React, { useState } from 'react'
 import './Header.css';
 import threeBarIcon from '../images/three-bar-menu-icon-3.png';
+import { Link, withRouter } from "react-router-dom";
 
 function Header() {
 
@@ -13,9 +14,9 @@ function Header() {
             <div className= "dropdown">
                 <button className="dropbtn"><img className = "dropDownImage" src = {threeBarIcon} alt = "bar icon"/></button>
                 <div className="dropdown-content">
-                    <a href="#">Home</a>
-                    <a href="#">Full Story</a>
-                    <a href="#">About Us</a>
+                    <Link to="/">Home</Link>
+                    <Link to="/full-story">Full Story</Link>
+                    <Link to="/about-us">About Us</Link>
                 </div>
             </div>
             <p><span className = "bold">Block</span>Train</p>
