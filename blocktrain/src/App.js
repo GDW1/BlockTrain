@@ -1,3 +1,6 @@
+/* Filename: App.js; Last Updated: 10/23/2021
+ * App.js sets up the router to all the pages.
+ */
 import './App.css';
 import Header from './components/Header.jsx'
 import Display from './components/Display.jsx'
