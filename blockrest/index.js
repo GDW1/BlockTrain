@@ -4,36 +4,25 @@ const express = require('express');
 const app = express();
 const port = 9000;
 const readline = require('readline-sync');
+const axios = require('axios'); 
+// const router = express.Router();
 
-app.get('/', (request, response) => {
-	response.write('Hello from ur mom\n');
-    const blockchain = new Blockchain();
+let blockchainCount = 1;
+const blockchain = new Blockchain();
+blockchain.chain[0].data = ""; 
 
-    var word = readline.question('Input a word ');
-    blockchain.chain[0].data = word;
-    response.write(blockchain.chain[0].data + '\n');
+app.use(express.urlencoded({extended: true})); 
 
-    for (let i=1; i<5; i++) {
-        var word = readline.question('Input a word ');
-
-        const newData = word;
-        blockchain.addBlock({data: newData});
-        response.write(blockchain.chain[i].data + '\n');
-    }
-    
-	response.end();
-});
+app.post('/', (req, res) => { 
+    let word = req.body.userInput;
+    const newData = word;
+    blockchain.addBlock({data: newData});
+    console.log(blockchain.chain[blockchainCount].data);           
+    let loopThroughBlockChain = 1;  
+    blockchainCount++;
+    console.log();
+})
 
 app.listen(port, () => {
 	console.log('Server is running...');
 }); 
-
-/*
-const blockchain = new Blockchain();
-for (let i=0; i<5; i++) {
-    const newData = 'blocktrain'+i;
-    blockchain.addBlock({data: newData});
-}
-
-console.log(blockchain);
-*/

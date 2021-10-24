@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './InputBox.css';
 import validator from 'validator';
 import { isCompositeComponentWithType } from 'react-dom/test-utils';
+import axios from 'axios';
 
 function validate(rules, stringField){
     //rules are conditions to be checked and accompanying messages
@@ -32,6 +33,9 @@ function InputBox(props){
             next_word.toString()
         );
         if (validation.isValid){
+            axios.post('http://localhost:9000', 
+                'userInput=' + next_word.toString()  
+            )
             alert('The word you entered was: ' + next_word.toString())
         }
         else{
@@ -42,6 +46,7 @@ function InputBox(props){
             alert("Input Invalid\n" + bigMessage);
         }
         document.getElementById("next_word").value = "";
+        
     }
     //implement some client side validation
     return (
