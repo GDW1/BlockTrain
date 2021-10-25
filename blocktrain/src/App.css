@@ -48,5 +48,4 @@
 
 body{
   background-color: var(--primary);
-  overflow: hidden; /*THIS DISABLES SCROLLING*/
 }
