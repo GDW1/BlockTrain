@@ -34,8 +34,11 @@ function InputBox(props){
         );
         if (validation.isValid){
             //setting update to true causes Display to refresh instantly
+            //alert(`The word you entered is: ${next_word.toString()}`)
             props.setUpdate(true);
             //posts next word to backend
+            //NEEDS BACKEND FOR ACTUAL TESTING
+            
             axios.post("http://localhost:3000/trainwords", {
                 "word": next_word.toString()
             })

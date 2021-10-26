@@ -3,15 +3,13 @@
  */
 import './Home.css';
 import Header from '../components/Header.jsx'
-import Display from '../components/Display.jsx'
-import InputBox from '../components/InputBox';
+import TrainController from '../components/TrainController';
 
 function Home() {
     return (
         <div className="Home">
             <Header/>
-            <Display/>
-            <InputBox/>
+            <TrainController/>
         </div>
     );
 }
