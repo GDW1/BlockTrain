@@ -2,34 +2,38 @@ const Blockchain = require('./blockchain');
 const Block = require('./block');
 const express = require('express');
 const app = express();
-
+const fs = require('fs')
+var cors = require('cors');
 const readline = require('readline-sync');
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-const menu = require('./routes/menu')
-app.use('/menu', menu)
+app.use(cors());
 
-const train = require('./routes/train')
-app.use('/train', train)
-app.get('/', (request, response) => {
-	response.write('Hello from ur mom\n');
-    const blockchain = new Blockchain();
-
-    var word = readline.question('Input a word ');
-    blockchain.chain[0].data = word;
-    response.write(blockchain.chain[0].data + '\n');
-
-    for (let i=1; i<5; i++) {
-        var word = readline.question('Input a word ');
-
-        const newData = word;
-        blockchain.addBlock({data: newData});
-        response.write(blockchain.chain[i].data + '\n');
+//const train = require('./routes/train')
+//app.post('/trainwords', train)
+//Initialize at least 7 blocks for this to work
+const blockchain = new Blockchain();
+for (let i = 0; i < 6; i++){
+    blockchain.addBlock("BLANK")
+}
+//POST takes in user input and adds it to t he blockchain
+app.post('/trainwords', (req, res) => {
+    const userWord = req.body.word
+    blockchain.addBlock(userWord);
+    return res.status(200).send("Created resource with " + userWord);
+});
+//GET iterates through blockchain, formats it as JSON, and sends it back to the frontend
+app.get('/trainwords', (req, res) => {
+    //iterate through all entries in blockchain
+    rvArray = []
+    for (let i = 0; i < blockchain.getSize(); i++){
+        rvArray.push({"word": blockchain.getData(i)});
     }
-    
-	response.end();
+    rvArrayJSON = JSON.parse(JSON.stringify(rvArray));
+    //console.log(rvArrayJSON)
+    return res.status(200).json(rvArrayJSON)
 });
 
 

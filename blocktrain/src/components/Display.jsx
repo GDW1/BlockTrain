@@ -19,8 +19,10 @@ class Display extends React.Component{
         this.state = {sampleData: ["", "", "", "", "", "", ""]};
     };
     pullData(){
-        //console.log("pulling");
+        console.log("pulling");
         const url = "http://localhost:3000/trainwords";
+        //NEEDS BACKEND FOR ACTUAL TESTING
+        
         axios.get(url)
             .then(
                 (res) => {
@@ -37,6 +39,7 @@ class Display extends React.Component{
                 }
 
             )
+        
     }
     componentDidMount(){
         this.checkInterval = setInterval(() => {
