@@ -2,9 +2,17 @@ const Blockchain = require('./blockchain');
 const Block = require('./block');
 const express = require('express');
 const app = express();
-const port = 9000;
+
 const readline = require('readline-sync');
 
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+
+const menu = require('./routes/menu')
+app.use('/menu', menu)
+
+const train = require('./routes/train')
+app.use('/train', train)
 app.get('/', (request, response) => {
 	response.write('Hello from ur mom\n');
     const blockchain = new Blockchain();
@@ -24,10 +32,8 @@ app.get('/', (request, response) => {
 	response.end();
 });
 
-app.listen(port, () => {
-	console.log('Server is running...');
-}); 
 
+module.exports = app
 /*
 const blockchain = new Blockchain();
 for (let i=0; i<5; i++) {

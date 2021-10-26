@@ -29,7 +29,7 @@ class Display extends React.Component{
                     for (let i = 0; i < 7; i++){
                         newData.push(rawData[rawData.length - 1 - i].word);
                     }
-                    //This should technically use setState but it refuses to work for some reason
+
                     // this.sampleData = newData;
                     // this.forceUpdate();
                     this.setState({sampleData: newData});
