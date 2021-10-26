@@ -5,6 +5,8 @@ import './App.css';
 import Header from './components/Header.jsx'
 import Display from './components/Display.jsx'
 import InputBox from './components/InputBox';
+import TrainController from './components/TrainController';
+import axios from 'axios';
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -15,6 +17,8 @@ import FullStory from './pages/FullStory.js'
 function App() {
   return (
     <div className="App">
+        <Header/>
+        <TrainController/>
         <Router>
             <Switch>
                 <Route path="/" exact component={() => <Home />} />

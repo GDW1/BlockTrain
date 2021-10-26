@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
-import ReactDOM from 'react-dom';
 import './InputBox.css';
 import validator from 'validator';
-import { isCompositeComponentWithType } from 'react-dom/test-utils';
+import axios from 'axios';
 
 function validate(rules, stringField){
     //rules are conditions to be checked and accompanying messages
@@ -22,8 +21,10 @@ function validate(rules, stringField){
 
 function InputBox(props){
     const [next_word, setWord] = useState("");
+    
     const handleSubmit = (event) =>{
         event.preventDefault();
+        //client side validation
         const validation = validate(
             [
                 {func: validator.isAlpha, message: "Input must contain only letters"},
@@ -32,18 +33,26 @@ function InputBox(props){
             next_word.toString()
         );
         if (validation.isValid){
-            alert('The word you entered was: ' + next_word.toString())
+            //setting update to true causes Display to refresh instantly
+            props.setUpdate(true);
+            //posts next word to backend
+            axios.post("http://localhost:3000/trainwords", {
+                "word": next_word.toString()
+            })
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
+            
         }
         else{
+            //error message
             let bigMessage = "";
             validation.message.forEach(
                 part => bigMessage += `-${part}\n`
             );
             alert("Input Invalid\n" + bigMessage);
         }
-        document.getElementById("next_word").value = "";
+        setWord("");
     }
-    //implement some client side validation
     return (
         <div className = {"InputField"}>
             <form onSubmit={handleSubmit}>
