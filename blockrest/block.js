@@ -1,31 +1,25 @@
-//this imports the GENESIS_DATA for our block
-const { GENESIS_DATA } = require('./genesis.js');
-const cryptoHash = require('./crypto-hash');
+const SHA256 = require('crypto-js/sha256');
 
 class Block {
-    constructor({timestamp, lastHash, hash, data}) {
+    constructor(timestamp, data, lastHash = '') {
         this.timestamp = timestamp;
-        this.lastHash = lastHash;
-        this.hash = hash;
         this.data = data;
+        this.lastHash = lastHash;
+        this.hash = this.calculateHash();
+        this.nonce = 0;
     }
-    //genesis() function calls the constructor to create the genesis block for our blockchain
-    static genesis() {
-        return new this(GENESIS_DATA);
-    }
-    // we have only previously defined the GENESIS_DATA, not the block.
-    // our first object we create will become the genesis block (I think)
 
-    //mineBlock will return a new Block based on the previous block
-    static mineBlock({lastBlock, data}) {
-        const timestamp = Date.now();
-        const lastHash = lastBlock.hash;
-        return new this({
-            timestamp,
-            lastHash,
-            data,
-            hash: cryptoHash(timestamp, lastHash, data)
-        });
+    // takes the properties of our block and generates the resulting hash
+    calculateHash() {
+        return SHA256(this.timestamp + this.lastHash + JSON.stringify(this.data) + this.nonce).toString();
+    }
+    //includes bitcoin style proof of work (hash must have n amount of leading 0s)
+    mineBlock(difficulty) {
+        while(this.hash.substring(0,difficulty) !== Array(difficulty+1).join("0")) {
+            this.nonce++;
+            this.hash = this.calculateHash();
+        }
+        console.log("Block mined: " + this.hash);
     }
 }
 

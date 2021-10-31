@@ -16,7 +16,8 @@ app.use(cors());
 //Initialize at least 7 blocks for this to work
 const blockchain = new Blockchain();
 for (let i = 0; i < 6; i++){
-    blockchain.addBlock("BLANK")
+    blockchain.addBlock(new Block(Date.now(), "BLANK"));
+    console.log('Is Data Valid?: ' + blockchain.isChainValid());
 }
 //POST takes in user input and adds it to t he blockchain
 app.post('/trainwords', (req, res) => {
@@ -38,12 +39,3 @@ app.get('/trainwords', (req, res) => {
 
 
 module.exports = app
-/*
-const blockchain = new Blockchain();
-for (let i=0; i<5; i++) {
-    const newData = 'blocktrain'+i;
-    blockchain.addBlock({data: newData});
-}
-
-console.log(blockchain);
-*/
