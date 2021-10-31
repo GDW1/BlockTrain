@@ -1,7 +1,8 @@
-// import crypto module (like a library)
+// import crypto module
+// unnecesarry, using crypto-js module in block class instead
 const crypto = require('crypto');
 
-// to create a hash, we need timestamp, lastHash, and word
+// to create a hash, we need timestamp, lastHash, word, and nonce
 const cryptoHash = (...inputs) => {
     // createHash('sha256') means we need to create a hash based on sha256 algorithm
     const hash = crypto.createHash('sha256');

@@ -15,12 +15,13 @@ app.use(cors());
 const blockchain = new Blockchain();
 blockchain.chain[0].data = "";
 for (let i = 0; i < 6; i++){
-    blockchain.addBlock("")
+    blockchain.addBlock(new Block(Date.now(), ""));
+    console.log('Is Data Valid?: ' + blockchain.isChainValid());
 }
-//POST takes in user input and adds it to t he blockchain
+//POST takes in user input and adds it to the blockchain
 app.post('/trainwords', (req, res) => {
     const userWord = req.body.word
-    blockchain.addBlock(userWord);
+    blockchain.addBlock(new Block(Date.now(), userWord));
     return res.status(200).send("Created resource with " + userWord);
 });
 //GET iterates through blockchain, formats it as JSON, and sends it back to the frontend
