@@ -8,10 +8,6 @@ import trainArt from '../images/TrainCar.png'
 import axios from 'axios';
 
 // SAMPLE DATA. CHANGE WHEN REAL DATA AVAILABLE
-
-
-
-
 class Display extends React.Component{
     constructor(props){
         super(props);
@@ -37,7 +33,6 @@ class Display extends React.Component{
                     this.setState({sampleData: newData});
                     
                 }
-
             )
         
     }
