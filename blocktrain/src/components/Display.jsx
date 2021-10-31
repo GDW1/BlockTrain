@@ -2,63 +2,40 @@
  * Display.jsx displays the words from the last 7 blocks of the blockchain into train cars
  */
 
-import React, { useState } from 'react'
+import React from 'react'
 import './Display.css';
 import trainArt from '../images/TrainCar.png'
 import axios from 'axios';
 
 // SAMPLE DATA. CHANGE WHEN REAL DATA AVAILABLE
-const sampleData = ["he", "can", "go", "and", "she", "can", "too"]
-
-// div(data-objData=data);
-
-const api = axios.create({
-    baseURL: `http://localhost:9000/onewordstoryjson`
-})
-
-// NOTE: NEED TO ENSURE THAT CHARACTERS ARE ONLY 10 CHARS LONG AND TRAIN CAR CAN ACCOMMODATE THAT
-
-// SAMPLE DATA. CHANGE WHEN REAL DATA AVAILABLE
-
 class Display extends React.Component{
-    // constructor(props) {
-    //     super(props);
-    //     api.get('/').then(res => {
-    //         console.log(res.data);
-    //         console.log('Hello World');
-    //         this.state = {sampleData: ["", "", "", "", "", "", ""]};
-    //     })
-    // }
-
     constructor(props){
         super(props);
         //console.log(this.props);
         this.state = {sampleData: ["", "", "", "", "", "", ""]};
-        api.get('/').then(res => {
-            console.log(res.data);
-            console.log('Hello World');
-        })
     };
     pullData(){
-        // //console.log("pulling");
-        // const url = "http://localhost:3000/trainwords";
-        // axios.get(url)
-        //     .then(
-        //         (res) => {
-        //             let rawData = JSON.parse(JSON.stringify(res.data));
-        //             let newData = [];
-        //             for (let i = 0; i < 7; i++){
-        //                 newData.push(rawData[rawData.length - 1 - i].word);
-        //             }
+        console.log("pulling");
+        const url = "http://localhost:3000/trainwords";
+        //NEEDS BACKEND FOR ACTUAL TESTING
+        
+        axios.get(url)
+            .then(
+                (res) => {
+                    let rawData = JSON.parse(JSON.stringify(res.data));
+                    let newData = [];
+                    for (let i = 0; i < 7; i++){
+                        newData.push(rawData[rawData.length - 1 - i].word);
+                    }
 
-        //             // this.sampleData = newData;
-        //             // this.forceUpdate();
-        //             this.setState({sampleData: newData});
+                    // this.sampleData = newData;
+                    // this.forceUpdate();
+                    this.setState({sampleData: newData});
                     
-        //         }
+                }
 
-        //     )
-        console.log("Help");
+            )
+        
     }
     componentDidMount(){
         this.checkInterval = setInterval(() => {

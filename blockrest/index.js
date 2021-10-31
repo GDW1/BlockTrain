@@ -2,79 +2,41 @@ const Blockchain = require('./blockchain');
 const Block = require('./block');
 const express = require('express');
 const app = express();
-const port = 9000;
-const readline = require('readline-sync');
-const axios = require('axios'); 
-const fs = require("fs"); 
+const fs = require('fs')
+var cors = require('cors');
+const readline = require('readline-sync'); 
 const onewordstory = require('./onestorywords');
-// const FormData = require('form-data');
 
-let blockchainCount = 1;
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+
+app.use(cors());
+
+//const train = require('./routes/train')
+//app.post('/trainwords', train)
+//Initialize at least 7 blocks for this to work 
 const blockchain = new Blockchain();
 blockchain.chain[0].data = "";
-
-var viewData = { 
-    blockchaindata : [] 
-}; 
-
-app.use(express.urlencoded({extended: true})); 
-app.use(express.json());
-
-app.post('/', (req, res) => { 
-   //  const form = new FormData(); 
-    const newData = req.body.userInput;
-    blockchain.addBlock({data: newData});
-    let currBlockData = blockchain.chain[blockchainCount].data;
-    let newWord = {
-        "word" : currBlockData
-    }
-    onewordstory.push(newWord); 
-    fs.writeFile("onestorywords.json", JSON.stringify(onewordstory), err => {
-     
-        // Checking for errors
-        if (err) throw err; 
-       
-        console.log("Done writing"); // Success
-    });
-    // const file = fs.readFile("onestorywords.json", err => {
-     
-    //     // Checking for errors
-    //     if (err) throw err; 
-       
-    //     console.log("Done reading"); // Success);
-    // });
-    // form.append('file', file, "onestorywords.json");
-    // console.log(form.getHeaders());
-
-    console.log(currBlockData);             
-    blockchainCount++;
-    console.log();
-})
-
-// app.get('/', function(req, res, next) {
-//     let objArray = [];
-//     const file = fs.readFile("onestorywords.json", err => {
-     
-//         // Checking for errors
-//         if (err) throw err; 
-        
-//         console.log("Done reading"); // Success);
-//     });
-//     objArray.push(file);
-//     res.render('index', { data: JSON.stringify(objArray) })
-// });
+for (let i = 0; i < 6; i++){
+    blockchain.addBlock("")
+}
+//POST takes in user input and adds it to t he blockchain
+app.post('/trainwords', (req, res) => {
+    const userWord = req.body.word
+    blockchain.addBlock(userWord);
+    return res.status(200).send("Created resource with " + userWord);
+});
+//GET iterates through blockchain, formats it as JSON, and sends it back to the frontend
+app.get('/trainwords', (req, res) => {
+    //iterate through all entries in blockchain
+    rvArray = []
+    for (let i = 0; i < blockchain.getSize(); i++){
+        rvArray.push({"word": blockchain.getData(i), "wordNum": blockchain.getSize()});
+    } 
+    rvArrayJSON = JSON.parse(JSON.stringify(rvArray));
+    //console.log(rvArrayJSON)
+    return res.status(200).json(rvArrayJSON)
+});
 
 
-app.get('/onewordstoryjson', function (req, res) {
-    res.header("Content-Type",'application/json');
-    res.send(JSON.stringify(onewordstory));
-})
-
-// app.get('/search', (req, res) => {
-//     res.header("Content-Type",'application/json');
-//     res.sendFile(path.join(__dirname, './onestorywords.json'));
-// })
-
-app.listen(port, () => {
-	console.log('Server is running...');
-}); 
+module.exports = app
