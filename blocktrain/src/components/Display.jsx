@@ -33,7 +33,6 @@ class Display extends React.Component{
                     this.setState({sampleData: newData});
                     
                 }
-
             )
         
     }
