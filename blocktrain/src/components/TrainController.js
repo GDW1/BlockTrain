@@ -13,7 +13,7 @@ class TrainController extends React.Component{
     render(){
         return(
             <div>
-                <InputBox  update = {this.state.update} setUpdate = {(e) => {this.setState({update: e})}}/>
+                <InputBox update = {this.state.update} setUpdate = {(e) => {this.setState({update: e})}}/>
                 <Display update = {this.state.update} setUpdate = {(e) => {this.setState({update: e})}}/>
             </div>
         )

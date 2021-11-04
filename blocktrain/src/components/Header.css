@@ -1,21 +1,34 @@
+body{
+    margin-top:0px;
+    margin-bottom: 0px;
+    padding: 0%;
+}
 .headerBlock{
     background-color: var(--secondary);
     color: var(--secondAccent);
     width: 100%;
-    font-size: 4vw;
-    margin-top: -4.5%;
+    height: 10%;
+    font-size: 40pt;
     font-family: montserrat, sans-serif;
+    display: flex;
+    justify-content: center;
+}
+
+.title{
+    margin-bottom: 10px;
+    margin-top:10px;
 }
 
 .bold{
     font-weight: 999;
     color: var(--firstAccent);
+    margin-bottom: 0%;
 }
 
 .dropDownImage{
     background-color: transparent;
     width: 100%;
-    transform: translate(0, 0);
+    /*transform: translate(0, 0);*/
 }
 /* Dropdown Button */
 .dropbtn {
@@ -24,17 +37,22 @@
     /*padding: 16px;*/
     font-size: 16px;
     border: none;
-    position: absolute;
-    left: 2.5%;
-    transform: translate(0%, 27%);
-    width: 4%;
-    height: auto;
+    /*position: absolute;*/
+
+    /*transform: translate(0%, 27%);*/
+    width: 100%;
+    height: 100%;
+
 }
 
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
-    position: relative;
-    display: block;
+    display: flex;
+    position:absolute;
+    left: 20px;
+    width:60px;
+    top: 20px;
+
 }
 
 /* Dropdown Content (Hidden by Default) */
@@ -42,12 +60,13 @@
     display: none;
     position: absolute;
     background-color: #f1f1f1;
-    font-size: 1.75vw;
-    min-width: 10%;
+    font-size: 20pt; /*NEED TO CHANGE*/
+    min-width: 200px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-    left:2.5%;
-    transform: translate(0%, 60%);
+    left: 10px;
+    top: 50px;
+    /*transform: translate(0%, 60%);*/
 }
 
 /* Links inside the dropdown */
@@ -66,3 +85,86 @@
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: transparent;}
+
+/*------------MOBILE VERSION----------------*/
+.headerBlockMobile{
+    background-color: var(--secondary);
+    color: var(--secondAccent);
+    width: 100%;
+    height: 85px;
+    font-size: 10vw;
+    font-family: montserrat, sans-serif;
+    display: flex;
+    justify-content: center;
+}
+
+.titleMobile{
+    margin: auto;
+}
+
+.bold{
+    font-weight: 999;
+    color: var(--firstAccent);
+    margin-bottom: 0%;
+}
+
+.dropDownImage{
+    background-color: transparent;
+    width: 100%;
+    /*transform: translate(0, 0);*/
+}
+/* Dropdown Button */
+.dropbtnMobile {
+    background-color:transparent;
+    color: white;
+    /*padding: 16px;*/
+    font-size: 16px;
+    border: none;
+    /*position: absolute;*/
+
+    /*transform: translate(0%, 27%);*/
+    width: 100%;
+    height: 100%;
+
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdownMobile {
+    display: flex;
+    position:absolute;
+    left: 20px;
+    width:60px;
+    top: 20px;
+
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-contentMobile {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    font-size: 20pt; /*NEED TO CHANGE*/
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    left: 10px;
+    top: 50px;
+    /*transform: translate(0%, 60%);*/
+}
+
+/* Links inside the dropdown */
+.dropdown-contentMobile a {
+    color: black;
+    padding: 2% 3%;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-contentMobile a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdownMobile:hover .dropdown-contentMobile {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdownMobile:hover .dropbtnMobile {background-color: transparent;}

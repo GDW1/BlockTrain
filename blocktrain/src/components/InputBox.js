@@ -67,6 +67,7 @@ function InputBox(props){
                 type = "text" 
                 minLength = "1" 
                 maxLength = "20"
+                autocomplete="off"
                 value = {next_word}
                 onChange = {(e) => setWord(e.target.value)}/>
                 <input  type = "submit" id = "InputSubmitButton" /*style = {{position: 'relative', left: '100px'}}*/></input>
