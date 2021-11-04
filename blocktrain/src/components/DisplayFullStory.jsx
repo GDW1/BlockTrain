@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import './DisplayFullStory.css';
 
 class FullStoryDisplay extends React.Component{
     constructor(props){
