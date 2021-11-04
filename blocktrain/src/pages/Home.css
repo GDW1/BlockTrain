@@ -48,5 +48,5 @@ root{
 
 body{
     background-color: var(--primary);
-    overflow: hidden; /*THIS DISABLES SCROLLING*/
+    /*overflow: hidden; THIS DISABLES SCROLLING*/
 }
