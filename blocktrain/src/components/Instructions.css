@@ -1,0 +1,9 @@
+.image{
+    background-color: transparent;
+}
+
+#text{
+    margin-left: 75px;
+    margin-top: 75px;
+    text-align: left;
+}
