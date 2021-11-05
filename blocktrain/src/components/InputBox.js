@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import './InputBox.css';
 import validator from 'validator';
 import axios from 'axios';
+const Filter = require('bad-words');
+const filter = new Filter();
 
 function validate(rules, stringField){
     //rules are conditions to be checked and accompanying messages
@@ -18,6 +20,16 @@ function validate(rules, stringField){
     );
     return {isValid: isValid, message: message};
 }
+//slightly improve filter.isProfane to block more bad words
+function isProfanity(word) {
+    if(filter.isProfane(word))
+        return true;
+    if(filter.isProfane(word.substring(0,4)))
+        return true;
+    if(filter.isProfane(word.substring(word.length-4, word.length)))
+        return true;
+    return false;
+}
 
 function InputBox(props){
     const [next_word, setWord] = useState("");
@@ -28,7 +40,9 @@ function InputBox(props){
         const validation = validate(
             [
                 {func: validator.isAlpha, message: "Input must contain only letters"},
-                {func: (inp) => !validator.isEmpty(inp), message: "Input cannot be empty"}
+                {func: (inp) => !validator.isEmpty(inp), message: "Input cannot be empty"},
+                {func: (inp) => !isProfanity(inp), message: "Input cannot contain profanity"}
+                
             ],
             next_word.toString()
         );
