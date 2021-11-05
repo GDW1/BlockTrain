@@ -3,13 +3,17 @@
  */
 import './Home.css';
 import Header from '../components/Header.jsx'
+import Instructions from '../components/Instructions.jsx'
 import TrainController from '../components/TrainController';
 
 function Home() {
     return (
         <div className="Home">
             <Header/>
-            <TrainController/>
+            <div className="body">
+                <Instructions id="background"/>
+                <TrainController id="foreground"/>
+            </div>
         </div>
     );
 }

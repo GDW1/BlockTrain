@@ -1,0 +1,28 @@
+.image{
+    background-color: transparent;
+    width: 800px;
+    height: 800px;
+
+    transform: translate(0%, -100%);
+    /*justify-content: left;*/
+}
+
+.instructions{
+    padding-top: 75px;
+}
+#text{
+    padding-left: 75px;
+    padding-top: 125px;
+    padding-bottom: 200px;
+    text-align: left;
+    font-size: 20pt;
+}
+
+.instructions{
+    background-color: var(--secondAccent);
+}
+
+#imageContainer{
+    height: 0px;
+    float: right;
+}
