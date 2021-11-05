@@ -21,7 +21,7 @@ function validate(rules, stringField){
 
 function InputBox(props){
     const [next_word, setWord] = useState("");
-    
+
     const handleSubmit = (event) =>{
         event.preventDefault();
         //client side validation
@@ -36,26 +36,38 @@ function InputBox(props){
             //setting update to true causes Display to refresh instantly
             //alert(`The word you entered is: ${next_word.toString()}`)
             props.setUpdate(true);
-            //posts next word to backend
-            //NEEDS BACKEND FOR ACTUAL TESTING
-            
+
+            /*== This section posts the next word to the backend --*/
+            // NOTE: NEED BACKEND FOR ACTUAL TESTING
             axios.post("http://localhost:3000/trainwords", {
                 "word": next_word.toString()
             })
             .then(res => console.log(res))
             .catch(err => console.log(err))
-            
+            /* End of Section */
+
+            /*== This section delays the user from entering another word for 1 second ==*/
+            var elemSubmit = document.getElementById('next_word');
+            elemSubmit.setAttribute("disabled", "disabled");
+
+            // Removes disabling after 1 second. TODO CHANGE WHEN DEPLOYING SITE!!!!!
+            window.setTimeout(function() {
+                elemSubmit.removeAttribute("disabled");
+            }, 1e3);
+            /* End of section */
         }
         else{
-            //error message
+            /*== This section alerts the user that the input is invalid ==*/
             let bigMessage = "";
             validation.message.forEach(
                 part => bigMessage += `-${part}\n`
             );
             alert("Input Invalid\n" + bigMessage);
+            /* End of Section */
         }
         setWord("");
     }
+
     return (
         <div className = {"InputField"}>
             <form onSubmit={handleSubmit}>
