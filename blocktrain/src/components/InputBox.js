@@ -42,7 +42,7 @@ function InputBox(props){
                 {func: validator.isAlpha, message: "Input must contain only letters"},
                 {func: (inp) => !validator.isEmpty(inp), message: "Input cannot be empty"},
                 {func: (inp) => !isProfanity(inp), message: "Input cannot contain profanity"}
-                
+
             ],
             next_word.toString()
         );
@@ -53,7 +53,7 @@ function InputBox(props){
 
             /*== This section posts the next word to the backend --*/
             // NOTE: NEED BACKEND FOR ACTUAL TESTING
-            axios.post("http://localhost:3000/trainwords", {
+            axios.post("https://blocktrain-backend.herokuapp.com/trainwords", {
                 "word": next_word.toString()
             })
             .then(res => console.log(res))
@@ -85,20 +85,20 @@ function InputBox(props){
     return (
         <div className = {"InputField"}>
             <form onSubmit={handleSubmit}>
-                <input 
+                <input
                 id="next_word"
-                name="next_word" 
+                name="next_word"
                 className = "InputBox"
-                placeholder="Enter your word" 
-                type = "text" 
-                minLength = "1" 
+                placeholder="Enter your word"
+                type = "text"
+                minLength = "1"
                 maxLength = "20"
                 autocomplete="off"
                 value = {next_word}
                 onChange = {(e) => setWord(e.target.value)}/>
                 <input  type = "submit" id = "InputSubmitButton" /*style = {{position: 'relative', left: '100px'}}*/></input>
             </form>
-        </div> 
+        </div>
     )
 
 }

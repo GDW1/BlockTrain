@@ -10,9 +10,9 @@ class FullStoryDisplay extends React.Component{
     };
     pullData(){
         console.log("pulling");
-        const url = "http://localhost:3000/trainwords";
+        const url = "https://blocktrain-backend.herokuapp.com/trainwords";
         //NEEDS BACKEND FOR ACTUAL TESTING
-        
+
         axios.get(url)
             .then(
                 (res) => {
@@ -25,11 +25,11 @@ class FullStoryDisplay extends React.Component{
                     // this.sampleData = newData;
                     // this.forceUpdate();
                     this.setState({sampleData: newData});
-                    
+
                 }
 
             )
-        
+
     }
     componentDidMount(){
         this.checkInterval = setInterval(() => {
@@ -49,12 +49,12 @@ class FullStoryDisplay extends React.Component{
             this.props.setUpdate(false);
         }
         return (
-            
+
             <div className={"displayComponent"}>
                 <p>{this.state.sampleData}</p>
-            </div> 
+            </div>
         )
     }
 }
 
-export default FullStoryDisplay; 
+export default FullStoryDisplay;
