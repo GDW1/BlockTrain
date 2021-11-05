@@ -11,7 +11,7 @@ const filter = new Filter();
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-app.use(cors({credentials: true, origin: "https://blocktrain.herokuapp.com"}));
+app.use(cors({origin: "https://blocktrain.herokuapp.com"}));
 
 //const train = require('./routes/train')
 //app.post('/trainwords', train)
