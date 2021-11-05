@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import './InputBox.css';
 import validator from 'validator';
 import axios from 'axios';
+const Filter = require('bad-words');
+const filter = new Filter();
 
 function validate(rules, stringField){
     //rules are conditions to be checked and accompanying messages
@@ -28,7 +30,9 @@ function InputBox(props){
         const validation = validate(
             [
                 {func: validator.isAlpha, message: "Input must contain only letters"},
-                {func: (inp) => !validator.isEmpty(inp), message: "Input cannot be empty"}
+                {func: (inp) => !validator.isEmpty(inp), message: "Input cannot be empty"},
+                {func: (inp) => !filter.isProfane(inp), message: "Profanity detected"}
+                
             ],
             next_word.toString()
         );
