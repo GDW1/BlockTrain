@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Instructions.css';
 import logo from '../images/logo1.png';
-import threeBarIcon from '../images/three-bar-menu-icon-3.png';
 
 function Instructions() {
 
@@ -9,7 +8,9 @@ function Instructions() {
         <div className="instructions">
             <div id="text">
                 <h1>Welcome.</h1>
-                <p>1. Enter a word. Only alphabetic characters allowed</p>
+                <p>1. Enter a word</p>
+                <p> - Only alphabetic characters are allowed</p>
+                <p> - No profanities</p>
                 <p>2. Press submit</p>
                 <p>3. Watch the story unfold</p>
                 <h2>Scroll down to begin!</h2>

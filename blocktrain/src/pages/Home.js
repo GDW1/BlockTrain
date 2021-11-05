@@ -10,8 +10,10 @@ function Home() {
     return (
         <div className="Home">
             <Header/>
-            <Instructions/>
-            <TrainController/>
+            <div className="body">
+                <Instructions id="background"/>
+                <TrainController id="foreground"/>
+            </div>
         </div>
     );
 }
