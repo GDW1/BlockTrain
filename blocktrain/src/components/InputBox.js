@@ -53,7 +53,7 @@ function InputBox(props){
             // Removes disabling after 1 second. TODO CHANGE WHEN DEPLOYING SITE!!!!!
             window.setTimeout(function() {
                 elemSubmit.removeAttribute("disabled");
-            }, 1e3);
+            }, 10e3);
             /* End of section */
         }
         else{
@@ -78,7 +78,7 @@ function InputBox(props){
                 placeholder="Enter your word" 
                 type = "text" 
                 minLength = "1" 
-                maxLength = "20"
+                maxLength = "13"
                 autocomplete="off"
                 value = {next_word}
                 onChange = {(e) => setWord(e.target.value)}/>
