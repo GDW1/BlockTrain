@@ -3,12 +3,17 @@
  */
 import './FullStory.css';
 import Header from '../components/Header.jsx'
+import DisplayFullStory from '../components/DisplayFullStory.jsx';
 
 function FullStory() {
+
     return (
         <div className="FullStory">
             <Header/>
-            <h1>THIS IS THE FULL STORY PAGE</h1>
+            <div id="text">
+                <h1 id="header">Full Story</h1>
+                <DisplayFullStory />
+            </div>
         </div>
     );
 }

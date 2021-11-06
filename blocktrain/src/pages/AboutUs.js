@@ -9,6 +9,10 @@ function AboutUs() {
     return (
         <div className="AboutUs">
             <Header/>
+            <div id="text">
+                <h1>THIS IS THE ABOUT US PAGE</h1>
+            </div>
+
             <h1>About Us</h1>
             <table id = "profiles">
                 <tr>
