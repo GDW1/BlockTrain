@@ -9,41 +9,41 @@ function AboutUs() {
     return (
         <div className="AboutUs">
             <Header/>
-            <div id="text">
-                <h1>THIS IS THE ABOUT US PAGE</h1>
+            <div id="textAboutUs">
+                <h1>About Us</h1>
             </div>
 
-            <h1>About Us</h1>
+            
             <table id = "profiles">
                 <tr>
                     <td>
                         <Profile profilePic = ""
-                                 name = "Daryl Ou"
+                                 name = "Daryl"
                                  description = ""/>
                     </td>
                     <td>
                         <Profile profilePic = ""
-                                 name = "David Wang"
+                                 name = "David"
                                  description = ""/>
                     </td>
                     <td>
                         <Profile profilePic = ""
-                                 name = "Guy Wilks"
+                                 name = "Guy"
                                  description = ""/>
                     </td>
                     <td>
                         <Profile profilePic = ""
-                                 name = "Kyle Wong"
+                                 name = "Kyle"
                                  description = ""/>
                     </td>
                     <td>
                         <Profile profilePic = ""
-                                 name = "Ryan He"
+                                 name = "Ryan"
                                  description = ""/>
                     </td>
                     <td>
                         <Profile profilePic = ""
-                                 name = "Rohan Marangoly"
+                                 name = "Rohan"
                                  description = ""/>
                     </td>
                 </tr>
