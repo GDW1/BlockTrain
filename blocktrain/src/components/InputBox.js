@@ -22,7 +22,11 @@ function validate(rules, stringField){
 function InputBox(props){
     const [next_word, setWord] = useState("");
     const [user_key, setUserKey] = useState("");
+    const [valid_user_key, setValidUserKey] = useState("");
     const [userValid, setUserValid] = useState(false);
+
+    const urlKey = "http://localhost:3000/userkeys";
+    const urlTrainWords = "http://localhost:3000/trainwords";
 
     const handleSubmit = (event) =>{
         event.preventDefault();
@@ -39,24 +43,44 @@ function InputBox(props){
             //alert(`The word you entered is: ${next_word.toString()}`)
             props.setUpdate(true);
 
-            /*== This section posts the next word to the backend --*/
-            // NOTE: NEED BACKEND FOR ACTUAL TESTING
-            axios.post("http://localhost:3000/trainwords", {
-                "word": next_word.toString()
-            })
-            .then(res => console.log(res))
-            .catch(err => console.log(err))
-            /* End of Section */
+            axios.get(urlKey)
+                .then(
+                    (res) => {
+                        let rawData = JSON.parse(JSON.stringify(res.data));
+                        let newData = [];
+                        for (let i = 0; i < rawData.length; i++){
+                            newData.push(rawData[i].key);
+                        }
+                        for (let i = 0; i < newData.length; i++){
+                            if (newData[i] === valid_user_key){
+                                /*== This section posts the next word to the backend --*/
+                                // NOTE: NEED BACKEND FOR ACTUAL TESTING
+                                axios.post(urlTrainWords, {
+                                    "word": next_word.toString()
+                                })
+                                    .then(res => console.log(res))
+                                    .catch(err => console.log(err))
+                                /* End of Section */
 
-            /*== This section delays the user from entering another word for 1 second ==*/
-            var elemSubmit = document.getElementById('next_word');
-            elemSubmit.setAttribute("disabled", "disabled");
+                                /*== This section delays the user from entering another word for 1 second ==*/
+                                var elemSubmit = document.getElementById('next_word');
+                                elemSubmit.setAttribute("disabled", "disabled");
 
-            // Removes disabling after 10 second.
-            window.setTimeout(function() {
-                elemSubmit.removeAttribute("disabled");
-            }, 10e3);
-            /* End of section */
+                                // Removes disabling after 10 second.
+                                window.setTimeout(function() {
+                                    elemSubmit.removeAttribute("disabled");
+                                }, 10e3);
+                                /* End of section */
+                                break;
+                            }
+                            else if (i == newData.length - 1){
+                                alert("USER KEY INVALID. DO NOT TRY TO GET AROUND THIS")
+                            }
+                        }
+                    }
+                )
+
+
         }
         else{
             /*== This section alerts the user that the input is invalid ==*/
@@ -84,34 +108,26 @@ function InputBox(props){
 
         if (validationUserKey.isValid){ // Checks if userKey is valid
             props.setUpdate(true);
-            const url = "http://localhost:3000/userkeys";
+
             /*== This section gets the keys from backend and checks userKey with them ==*/
             // NOTE: NEED BACKEND FOR ACTUAL TESTING
-            console.log("HERE")
-            axios.get(url)
+            axios.get(urlKey)
                 .then(
                     (res) => {
-                        // let rawData = JSON.parse(JSON.stringify(res.data));
-                        // for (let i = 0; i < rawData.length - 1; i++){
-                        //     console.log(rawData[i])
-                        //     if (rawData[i] == user_key){
-                        //
-                        //         setUserValid(true);
-                        //         break;
-                        //     }
-                        // }
                         let rawData = JSON.parse(JSON.stringify(res.data));
                         let newData = [];
                         for (let i = 0; i < rawData.length; i++){
-                            console.log(rawData[i])
                             newData.push(rawData[i].key);
                         }
                         for (let i = 0; i < newData.length; i++){
-                            console.log(newData[i])
-                            console.log(user_key)
                             if (newData[i] === user_key){
+                                alert("Success! You may now enter words.")
                                 setUserValid(true);
+                                setValidUserKey(user_key);
                                 break;
+                            }
+                            else if (i == newData.length - 1){
+                                alert("User key invalid. Contact admin for key.")
                             }
                         }
                     }
@@ -128,10 +144,6 @@ function InputBox(props){
             /* End of Section */
         }
         setUserKey("");
-
-        /*== This section sends a GET request to the backend to verify user_key is valid ==*/
-
-        /* End of Section */
     }
 
     if (!userValid) { //CHANGE TO !userValid
@@ -143,10 +155,10 @@ function InputBox(props){
                         id="user_key"
                         name="user_key"
                         className="InputBox"
-                        placeholder="Enter your user key"
+                        placeholder=""
                         type="text"
                         minLength="1"
-                        maxLength="32"
+                        maxLength="16"
                         autoComplete="off"
                         value={user_key}
                         onChange={(e) => setUserKey(e.target.value)}/>
@@ -165,7 +177,7 @@ function InputBox(props){
                         id="next_word"
                         name="next_word"
                         className="InputBox"
-                        placeholder="Enter your word"
+                        placeholder=""
                         type="text"
                         minLength="1"
                         maxLength="13"

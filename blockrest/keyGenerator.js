@@ -6,7 +6,7 @@ let keys = [];
 const generateKeys = (numKeys) => {
     for (let i = 0; i < numKeys; i++) {
         const id = generateUniqueId({
-            length: 32,
+            length: 16,
             useLetters: true
         });
         console.log(id);
