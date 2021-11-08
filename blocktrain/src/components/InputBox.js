@@ -56,7 +56,8 @@ function InputBox(props){
                                 /*== This section posts the next word to the backend --*/
                                 // NOTE: NEED BACKEND FOR ACTUAL TESTING
                                 axios.post(urlTrainWords, {
-                                    "word": next_word.toString()
+                                    "word": next_word.toString(),
+                                    "user_key": valid_user_key.toString()
                                 })
                                     .then(res => console.log(res))
                                     .catch(err => console.log(err))

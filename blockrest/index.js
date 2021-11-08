@@ -6,6 +6,7 @@ const express = require('express');
 const app = express();
 const fs = require('fs')
 var cors = require('cors');
+const {checkUserKey} = require("./keyGenerator");
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
@@ -37,8 +38,14 @@ app.get('/userkeys', (req, res) => {
 //POST takes in user input and adds it to the blockchain
 app.post('/trainwords', (req, res) => {
     const userWord = req.body.word
-    blockchain.addBlock(new Block(Date.now(), userWord));
-    return res.status(200).send("Created resource with " + userWord);
+    const key = req.body.user_key
+    if (keyGenerator.checkUserKey(key)) {
+        blockchain.addBlock(new Block(Date.now(), userWord));
+        return res.status(200).send("Created resource with " + userWord);
+    }
+    else{
+        return res.status(400).send("BAD REQUEST");
+    }
 });
 //GET iterates through blockchain, formats it as JSON, and sends it back to the frontend
 app.get('/trainwords', (req, res) => {
