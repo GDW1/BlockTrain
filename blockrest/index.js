@@ -41,7 +41,7 @@ for (let i = 0; i < 6; i++){
 }
 
 //Generates Keys, change 10 to environmental variable
-keyGenerator.generateKeys(10)
+keyGenerator.generateKeys(30)
 
 //GET iterates through keys, formats it as JSON, and sends it back to the frontend
 app.get('/userkeys', (req, res) => {
