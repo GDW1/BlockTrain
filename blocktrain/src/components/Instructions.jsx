@@ -33,11 +33,12 @@ function Instructions() {
             <div className="instructions">
                 <div id="text">
                     <h1>Welcome.</h1>
-                    <p>1. Enter a word</p>
+                    <p>1. Enter your user key</p>
+                    <p>2. Enter a word</p>
                     <p> - Only alphabetic characters are allowed</p>
                     <p> - No profanities</p>
-                    <p>2. Press submit</p>
-                    <p>3. Watch the story unfold</p>
+                    <p>3. Press submit</p>
+                    <p>4. Watch the story unfold</p>
                     <h2>Scroll down to begin!</h2>
                 </div>
                 <div id="imageContainer">

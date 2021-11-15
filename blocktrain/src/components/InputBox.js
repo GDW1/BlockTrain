@@ -80,8 +80,6 @@ function InputBox(props){
                         }
                     }
                 )
-
-
         }
         else{
             /*== This section alerts the user that the input is invalid ==*/

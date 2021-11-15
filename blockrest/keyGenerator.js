@@ -1,6 +1,6 @@
 const generateUniqueId = require('generate-unique-id');
 
-let keys = [];
+let keys = ["j9ddj1yepcnrwvfb"];
 
 // Generates numKeys amount of keys
 const generateKeys = (numKeys) => {

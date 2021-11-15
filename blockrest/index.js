@@ -1,12 +1,10 @@
 const keyGenerator = require('./keyGenerator')
-
 const Blockchain = require('./blockchain');
 const Block = require('./block');
 const express = require('express');
 const app = express();
 const fs = require('fs')
 var cors = require('cors');
-const {checkUserKey} = require("./keyGenerator");
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
