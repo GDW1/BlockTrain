@@ -1,13 +1,22 @@
 import React from 'react';
 import axios from 'axios';
 import './DisplayFullStory.css';
+import LoadSpinner from './LoadSpinner.js';
 
 class FullStoryDisplay extends React.Component{
+
     constructor(props){
         super(props);
         //console.log(this.props);
-        this.state = {sampleData: ["", "", "", "", "", "", ""]};
+        this.state = {sampleData: ["", "", "", "", "", "", ""], isLoaded: true, counter: 0};
     };
+
+    handleIsLoadedToggle = () => {
+        this.setState(prevState => ({
+            isLoaded: !prevState.isLoaded
+        }))
+    };
+
     pullData(){
         console.log("pulling");
         const url = "https://blocktrain-backend.herokuapp.com/trainwords";
@@ -21,7 +30,6 @@ class FullStoryDisplay extends React.Component{
                     for (let i = 7; i < rawData[rawData.length - 1].wordNum; i++){
                         newData.push(rawData[i].word + " ");
                     }
-
                     // this.sampleData = newData;
                     // this.forceUpdate();
                     this.setState({sampleData: newData});
@@ -29,7 +37,10 @@ class FullStoryDisplay extends React.Component{
                 }
 
             )
-
+        if (this.state.counter == 0) {
+            this.handleIsLoadedToggle()
+            this.setState({counter: 1})
+        }
     }
     componentDidMount(){
         this.checkInterval = setInterval(() => {
@@ -47,11 +58,13 @@ class FullStoryDisplay extends React.Component{
             //console.log("updating");
             this.pullData();
             this.props.setUpdate(false);
+
         }
         return (
 
             <div className={"displayComponent"}>
                 <p>{this.state.sampleData}</p>
+                { this.state.isLoaded && <LoadSpinner />}
             </div>
         )
     }
