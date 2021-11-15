@@ -12,7 +12,7 @@ const filter = new Filter();
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-app.use(cors());
+app.use(cors({origin: "https://blocktrain.herokuapp.com"}));
 
 function isProfanity(word) {
 
@@ -76,7 +76,7 @@ app.get('/trainwords', (req, res) => {
     rvArray = []
     for (let i = 0; i < blockchain.getSize(); i++){
         rvArray.push({"word": blockchain.getData(i), "wordNum": blockchain.getSize()});
-    } 
+    }
     rvArrayJSON = JSON.parse(JSON.stringify(rvArray));
     //console.log(rvArrayJSON)
     return res.status(200).json(rvArrayJSON)

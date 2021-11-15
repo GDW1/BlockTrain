@@ -19,10 +19,9 @@ class FullStoryDisplay extends React.Component{
 
     pullData(){
         console.log("pulling");
-        const url = "http://localhost:3000/trainwords";
-
+        const url = "https://blocktrain-backend.herokuapp.com/trainwords";
         //NEEDS BACKEND FOR ACTUAL TESTING
-        
+
         axios.get(url)
             .then(
                 (res) => {
@@ -42,8 +41,6 @@ class FullStoryDisplay extends React.Component{
             this.handleIsLoadedToggle()
             this.setState({counter: 1})
         }
-
-        
     }
     componentDidMount(){
         this.checkInterval = setInterval(() => {
@@ -64,7 +61,7 @@ class FullStoryDisplay extends React.Component{
 
         }
         return (
-            
+
             <div className={"displayComponent"}>
                 <p>{this.state.sampleData}</p>
                 { this.state.isLoaded && <LoadSpinner />}
@@ -73,4 +70,4 @@ class FullStoryDisplay extends React.Component{
     }
 }
 
-export default FullStoryDisplay; 
+export default FullStoryDisplay;

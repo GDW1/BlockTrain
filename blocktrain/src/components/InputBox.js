@@ -45,8 +45,8 @@ function InputBox(props){
     const [valid_user_key, setValidUserKey] = useState("");
     const [userValid, setUserValid] = useState(false);
 
-    const urlKey = "http://localhost:3000/userkeys";
-    const urlTrainWords = "http://localhost:3000/trainwords";
+    const urlKey = "https://blocktrain-backend.herokuapp.com/userkeys";
+    const urlTrainWords = "https://blocktrain-backend.herokuapp.com/trainwords";
 
     const handleSubmit = (event) =>{
         event.preventDefault();
@@ -56,7 +56,7 @@ function InputBox(props){
                 {func: validator.isAlpha, message: "Input must contain only letters"},
                 {func: (inp) => !validator.isEmpty(inp), message: "Input cannot be empty"},
                 {func: (inp) => !isProfanity(inp), message: "Input cannot contain profanity"}
-                
+
             ],
             next_word.toString()
         );
