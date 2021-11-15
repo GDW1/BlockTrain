@@ -2,17 +2,19 @@ body{
     margin-top:0px;
     margin-bottom: 0px;
     padding: 0%;
-
 }
 .headerBlock{
     background-color: var(--secondary);
     color: var(--secondAccent);
     width: 100%;
-    height: 10%;
+    height: 85px;
     font-size: 40pt;
     font-family: montserrat, sans-serif;
     display: flex;
     justify-content: center;
+    z-index: 5;
+    position: fixed;
+
 }
 
 .title{

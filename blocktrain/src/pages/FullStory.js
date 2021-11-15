@@ -3,15 +3,17 @@
  */
 import './FullStory.css';
 import Header from '../components/Header.jsx'
-
 import DisplayFullStory from '../components/DisplayFullStory.jsx';
 
 function FullStory() {
+
     return (
         <div className="FullStory">
             <Header/>
-            <h1>Full Story</h1>
-            <DisplayFullStory />
+            <div id="text">
+                <h1 id="header">Full Story</h1>
+                <DisplayFullStory />
+            </div>
         </div>
     );
 }
