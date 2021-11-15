@@ -3,6 +3,7 @@ import './InputBox.css';
 import validator from 'validator';
 import axios from 'axios';
 const Filter = require('bad-words');
+
 const filter = new Filter();
 
 function validate(rules, stringField){
@@ -20,14 +21,21 @@ function validate(rules, stringField){
     );
     return {isValid: isValid, message: message};
 }
-//slightly improve filter.isProfane to block more bad words
+//slightly improve filter.isProfane 
 function isProfanity(word) {
+
     if(filter.isProfane(word))
         return true;
-    if(filter.isProfane(word.substring(0,4)))
-        return true;
-    if(filter.isProfane(word.substring(word.length-4, word.length)))
-        return true;
+    for (let i=0; i<word.length-2; i++) 
+        if (word.substring(i,i+3).toLowerCase() === 'fck' || word.substring(i,i+3).toLowerCase() === 'nlg' || word.substring(i,i+3).toLowerCase() === 'ngg' || word.substring(i,i+3).toLowerCase() === 'fgg') 
+            return true;
+    for (let i=0; i<word.length-3; i++) 
+        if (word.substring(i,i+4).toLowerCase() === 'shit' || word.substring(i,i+4).toLowerCase() === 'shlt' || word.substring(i,i+4).toLowerCase() === 'shjt' || word.substring(i,i+4).toLowerCase() === 'iigg' || word.substring(i,i+4).toLowerCase() === 'nigg' || word.substring(i,i+4).toLowerCase() === 'nigl' || word.substring(i,i+4).toLowerCase() === 'njgg' || word.substring(i,i+4).toLowerCase() === 'nygg' || word.substring(i,i+4).toLowerCase() === 'nicg' || word.substring(i,i+4).toLowerCase() === 'fuck' || word.substring(i,i+4).toLowerCase() === 'dick' || word.substring(i,i+4).toLowerCase() === 'dlck' || word.substring(i,i+4).toLowerCase() === 'djck') 
+            return true;
+    for (let i=0; i<word.length-4; i++) 
+        if (word.substring(i,i+5).toLowerCase() === 'bitch' || word.substring(i,i+5).toLowerCase() === 'bltch' || word.substring(i,i+5).toLowerCase() === 'bjtch') 
+            return true;
+
     return false;
 }
 

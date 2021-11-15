@@ -19,8 +19,8 @@ class Blockchain {
         newBlock.lastHash = this.getLatestBlock().hash;
         newBlock.mineBlock(this.difficulty);
         this.chain.push(newBlock);
-        console.log(`currlength: ${this.chain.length}`)
-        console.log(this.chain[this.chain.length - 1])
+        //console.log(`currlength: ${this.chain.length}`)
+        //console.log(this.chain[this.chain.length - 1])
     }
     //checks that each hash hasn't changed
     isChainValid(){
