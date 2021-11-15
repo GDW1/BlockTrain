@@ -1,3 +1,4 @@
+const keyGenerator = require('./keyGenerator')
 const Blockchain = require('./blockchain');
 const Block = require('./block');
 const express = require('express');
@@ -39,15 +40,34 @@ for (let i = 0; i < 6; i++){
     //console.log('Is Data Valid?: ' + blockchain.isChainValid());
 }
 
-//POST takes in user input and adds it to the blockchain  
+//Generates Keys, change 10 to environmental variable
+keyGenerator.generateKeys(10)
+
+//GET iterates through keys, formats it as JSON, and sends it back to the frontend
+app.get('/userkeys', (req, res) => {
+    let keyArray = []
+    for (let i = 0; i < keyGenerator.getArray().length; i++){
+        keyArray.push({"key": keyGenerator.getKey(i)})
+    }
+    let keyArrayJSON = JSON.parse(JSON.stringify(keyArray));
+    return res.status(200).json(keyArrayJSON);
+})
+
+//POST takes in user input and adds it to the blockchain
 app.post('/trainwords', (req, res) => {
     const userWord = req.body.word
-    if (!isProfanity(userWord)) {
-        blockchain.addBlock(new Block(Date.now(), userWord));
-        return res.status(200).send("Created resource with " + userWord);
+    const key = req.body.user_key
+    if (keyGenerator.checkUserKey(key)) {
+        if (!isProfanity(userWord)) {
+            blockchain.addBlock(new Block(Date.now(), userWord));
+            return res.status(200).send("Created resource with " + userWord);
+        }
+        else {
+            return res.status(403).send("Forbidden");
+        }
     }
-    else {
-        return res.send("Resource not created due to profanity");
+    else{
+        return res.status(400).send("BAD REQUEST");
     }
 });
 //GET iterates through blockchain, formats it as JSON, and sends it back to the frontend
