@@ -2,6 +2,9 @@ import React, {useState} from 'react';
 import './InputBox.css';
 import validator from 'validator';
 import axios from 'axios';
+const Filter = require('bad-words');
+
+const filter = new Filter();
 
 function validate(rules, stringField){
     //rules are conditions to be checked and accompanying messages
@@ -17,6 +20,23 @@ function validate(rules, stringField){
         }
     );
     return {isValid: isValid, message: message};
+}
+//slightly improve filter.isProfane 
+function isProfanity(word) {
+
+    if(filter.isProfane(word))
+        return true;
+    for (let i=0; i<word.length-2; i++) 
+        if (word.substring(i,i+3).toLowerCase() === 'fck' || word.substring(i,i+3).toLowerCase() === 'nlg' || word.substring(i,i+3).toLowerCase() === 'ngg' || word.substring(i,i+3).toLowerCase() === 'fgg') 
+            return true;
+    for (let i=0; i<word.length-3; i++) 
+        if (word.substring(i,i+4).toLowerCase() === 'shit' || word.substring(i,i+4).toLowerCase() === 'shlt' || word.substring(i,i+4).toLowerCase() === 'shjt' || word.substring(i,i+4).toLowerCase() === 'iigg' || word.substring(i,i+4).toLowerCase() === 'nigg' || word.substring(i,i+4).toLowerCase() === 'nigl' || word.substring(i,i+4).toLowerCase() === 'njgg' || word.substring(i,i+4).toLowerCase() === 'nygg' || word.substring(i,i+4).toLowerCase() === 'nicg' || word.substring(i,i+4).toLowerCase() === 'fuck' || word.substring(i,i+4).toLowerCase() === 'dick' || word.substring(i,i+4).toLowerCase() === 'dlck' || word.substring(i,i+4).toLowerCase() === 'djck') 
+            return true;
+    for (let i=0; i<word.length-4; i++) 
+        if (word.substring(i,i+5).toLowerCase() === 'bitch' || word.substring(i,i+5).toLowerCase() === 'bltch' || word.substring(i,i+5).toLowerCase() === 'bjtch') 
+            return true;
+
+    return false;
 }
 
 function InputBox(props){
@@ -34,7 +54,9 @@ function InputBox(props){
         const validationUserString = validate(
             [
                 {func: validator.isAlpha, message: "Input must contain only letters"},
-                {func: (inp) => !validator.isEmpty(inp), message: "Input cannot be empty"}
+                {func: (inp) => !validator.isEmpty(inp), message: "Input cannot be empty"},
+                {func: (inp) => !isProfanity(inp), message: "Input cannot contain profanity"}
+                
             ],
             next_word.toString()
         );
