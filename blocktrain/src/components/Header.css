@@ -1,8 +1,10 @@
+
 body{
     margin-top:0px;
     margin-bottom: 0px;
     padding: 0%;
 }
+
 .headerBlock{
     background-color: var(--secondary);
     color: var(--secondAccent);
