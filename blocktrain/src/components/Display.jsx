@@ -53,7 +53,7 @@ class Display extends React.Component{
                     
                 }
             )
-        if (this.state.counter == 0) {
+        if (this.state.counter === 0) {
             this.handleIsLoadedToggle()
             this.setState({counter: 1})
         }

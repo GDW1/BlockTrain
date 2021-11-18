@@ -6,6 +6,7 @@ const app = express();
 const fs = require('fs')
 const Filter = require('bad-words');
 var cors = require('cors');
+const { ppid } = require('process');
 
 const filter = new Filter();
 
@@ -33,6 +34,15 @@ function isProfanity(word) {
 
 //const train = require('./routes/train')
 //app.post('/trainwords', train)
+
+//INCOMPLETE - Private Game
+/*
+let gameBlockchains = {};
+//id of global game is 0
+let gameIDs = new Set([0]);
+*/
+
+
 const blockchain = new Blockchain();
 blockchain.chain[0].data = "";
 for (let i = 0; i < 6; i++){
@@ -55,6 +65,20 @@ app.post('/userkeys', (req, res) => {
     }
 })
 
+
+//INCOMPLETE - Private Game
+/*app.get('/gameid', (req, res) => {
+    let id = 0;
+    while (gameIDs.has(id)){
+        id = Math.floor(100000 + Math.random() * 900000);
+    }
+    gameIDs.add(id);
+    gameBlockchains[id] = new Blockchain();
+    let idJSON = JSON.parse(JSON.stringify([{"gameID" : id}]));
+    return res.status(200).json(idJSON);
+
+})*/
+
 //POST takes in user input and adds it to the blockchain
 app.post('/trainwords', (req, res) => {
     const userWord = req.body.word
@@ -72,17 +96,28 @@ app.post('/trainwords', (req, res) => {
         return res.status(400).send("BAD REQUEST");
     }
 });
-//GET iterates through blockchain, formats it as JSON, and sends it back to the frontend
+//GET iterates through blockchain, formats it as JSON, and sends it back to the client
 app.get('/trainwords', (req, res) => {
     //iterate through all entries in blockchain
-    rvArray = []
+    let rvArray = []
     for (let i = 0; i < blockchain.getSize(); i++){
         rvArray.push({"word": blockchain.getData(i), "wordNum": blockchain.getSize()});
     } 
-    rvArrayJSON = JSON.parse(JSON.stringify(rvArray));
+    let rvArrayJSON = JSON.parse(JSON.stringify(rvArray));
     //console.log(rvArrayJSON)
     return res.status(200).json(rvArrayJSON)
 });
+
+app.get('/chain', (req, res) => {
+    return res.status(200).send(JSON.stringify(blockchain));
+})
+
+app.post('/register', (req, res) => {
+    const newNodes = req.body.nodes;
+    if (newNodes === null){
+        return res.status(400).send("Please enter a valid list of nodes")
+    }
+})
 
 
 module.exports = app
