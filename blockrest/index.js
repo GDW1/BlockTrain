@@ -1,19 +1,16 @@
 const keyGenerator = require('./keyGenerator')
 const Blockchain = require('./blockchain');
 const Block = require('./block');
+const Filter = require('bad-words');
 const express = require('express');
 const app = express();
-const fs = require('fs')
-const Filter = require('bad-words');
+
 var cors = require('cors');
-const { ppid } = require('process');
-
-const filter = new Filter();
-
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-
 app.use(cors());
+
+const filter = new Filter();
 
 function isProfanity(word) {
 
@@ -32,22 +29,12 @@ function isProfanity(word) {
     return false;
 }
 
-//const train = require('./routes/train')
-//app.post('/trainwords', train)
-
-//INCOMPLETE - Private Game
-/*
-let gameBlockchains = {};
-//id of global game is 0
-let gameIDs = new Set([0]);
-*/
-
+var blockCount = 1;
 
 const blockchain = new Blockchain();
-blockchain.chain[0].data = "";
 for (let i = 0; i < 6; i++){
-    blockchain.addBlock(new Block(Date.now(), ""));
-    //console.log('Is Data Valid?: ' + blockchain.isChainValid());
+    blockchain.addBlock(new Block(Date.now(), ''));
+    blockCount++;
 }
 
 //Generates Keys, change 10 to environmental variable
@@ -86,6 +73,7 @@ app.post('/trainwords', (req, res) => {
     if (keyGenerator.checkUserKey(key)) {
         if (!isProfanity(userWord)) {
             blockchain.addBlock(new Block(Date.now(), userWord));
+            blockCount++;
             return res.status(200).send("Created resource with " + userWord);
         }
         else {
@@ -98,12 +86,23 @@ app.post('/trainwords', (req, res) => {
 });
 //GET iterates through blockchain, formats it as JSON, and sends it back to the client
 app.get('/trainwords', (req, res) => {
-    //iterate through all entries in blockchain
-    let rvArray = []
-    for (let i = 0; i < blockchain.getSize(); i++){
-        rvArray.push({"word": blockchain.getData(i), "wordNum": blockchain.getSize()});
-    } 
-    let rvArrayJSON = JSON.parse(JSON.stringify(rvArray));
+    let rvArray = []; 
+    //adds all entries into rv, starting with the last block
+    tempHead = blockchain.head;
+    while (tempHead !== null) {
+        rvArray.push({ "word" : tempHead.data, "wordNum" : blockCount});
+        tempHead = tempHead.lastBlock;
+    }
+    //reverse the array since it starts with the last block
+    const size = rvArray.length;
+    for (let i=0; i<size/2; i++) {
+        temp = rvArray[i];
+        rvArray[i] = rvArray[rvArray.length-i-1];
+        rvArray[rvArray.length-i-1] = temp;
+    }
+
+    rvArrayJSON = JSON.parse(JSON.stringify(rvArray));
+
     //console.log(rvArrayJSON)
     return res.status(200).json(rvArrayJSON)
 });
