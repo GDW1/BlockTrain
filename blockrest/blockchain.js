@@ -9,9 +9,16 @@ class Blockchain {
         this.difficulty = 3;
         this.nodes = new Set();
     }
+
+    createSevenBlocks(){
+        for (let i = 0; i < 7; i++){
+            blockchain.addBlock(new Block(Date.now(), ""));
+            //console.log('Is Data Valid?: ' + blockchain.isChainValid());
+        }
+    }
     //creates the genesis block
     createGenesisBlock() {
-        return new Block(Date.now(), "Genesis Block", "0");
+        return new Block(Date.now(), "", "0");
     }
     //returns the last block
     getLatestBlock() {

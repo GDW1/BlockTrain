@@ -8,7 +8,7 @@ import TrainController from '../components/TrainController';
 import React, {useState} from 'react';
 
 function Home() {
-    const[currentID, setCurrentID] = useState(0);
+    //const[currentID, setCurrentID] = useState(0);
     return (
         <div className="Home">
             <Header/>

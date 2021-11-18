@@ -36,19 +36,15 @@ function isProfanity(word) {
 //app.post('/trainwords', train)
 
 //INCOMPLETE - Private Game
-/*
+
 let gameBlockchains = {};
 //id of global game is 0
 let gameIDs = new Set([0]);
-*/
 
 
-const blockchain = new Blockchain();
-blockchain.chain[0].data = "";
-for (let i = 0; i < 6; i++){
-    blockchain.addBlock(new Block(Date.now(), ""));
-    //console.log('Is Data Valid?: ' + blockchain.isChainValid());
-}
+
+gameBlockchains[0] = new Blockchain();
+gameBlockchains[0].createSevenBlocks();
 
 //Generates Keys, change 10 to environmental variable
 keyGenerator.generateKeys(30)
@@ -65,7 +61,7 @@ app.get('/userkeys', (req, res) => {
 
 
 //INCOMPLETE - Private Game
-/*app.get('/gameid', (req, res) => {
+app.post('/gameid', (req, res) => {
     let id = 0;
     while (gameIDs.has(id)){
         id = Math.floor(100000 + Math.random() * 900000);
@@ -75,7 +71,7 @@ app.get('/userkeys', (req, res) => {
     let idJSON = JSON.parse(JSON.stringify([{"gameID" : id}]));
     return res.status(200).json(idJSON);
 
-})*/
+})
 
 //POST takes in user input and adds it to the blockchain
 app.post('/trainwords', (req, res) => {
@@ -83,7 +79,7 @@ app.post('/trainwords', (req, res) => {
     const key = req.body.user_key
     if (keyGenerator.checkUserKey(key)) {
         if (!isProfanity(userWord)) {
-            blockchain.addBlock(new Block(Date.now(), userWord));
+            gameBlockchains[0].addBlock(new Block(Date.now(), userWord));
             return res.status(200).send("Created resource with " + userWord);
         }
         else {
@@ -98,8 +94,8 @@ app.post('/trainwords', (req, res) => {
 app.get('/trainwords', (req, res) => {
     //iterate through all entries in blockchain
     let rvArray = []
-    for (let i = 0; i < blockchain.getSize(); i++){
-        rvArray.push({"word": blockchain.getData(i), "wordNum": blockchain.getSize()});
+    for (let i = 0; i < gameBlockchains[0].getSize(); i++){
+        rvArray.push({"word": gameBlockchains[0].getData(i), "wordNum": gameBlockchains[0].getSize()});
     } 
     let rvArrayJSON = JSON.parse(JSON.stringify(rvArray));
     //console.log(rvArrayJSON)
@@ -107,7 +103,7 @@ app.get('/trainwords', (req, res) => {
 });
 
 app.get('/chain', (req, res) => {
-    return res.status(200).send(JSON.stringify(blockchain));
+    return res.status(200).send(JSON.stringify(gameBlockchains[0]));
 })
 
 app.post('/register', (req, res) => {
