@@ -65,43 +65,23 @@ function InputBox(props){
             //alert(`The word you entered is: ${next_word.toString()}`)
             props.setUpdate(true);
 
-            axios.get(urlKey)
-                .then(
-                    (res) => {
-                        let rawData = JSON.parse(JSON.stringify(res.data));
-                        let newData = [];
-                        for (let i = 0; i < rawData.length; i++){
-                            newData.push(rawData[i].key);
-                        }
-                        for (let i = 0; i < newData.length; i++){
-                            if (newData[i] === valid_user_key){
-                                /*== This section posts the next word to the backend --*/
-                                // NOTE: NEED BACKEND FOR ACTUAL TESTING
-                                axios.post(urlTrainWords, {
-                                    "word": next_word.toString(),
-                                    "user_key": valid_user_key.toString()
-                                })
-                                    .then(res => console.log(res))
-                                    .catch(err => console.log(err))
-                                /* End of Section */
+            axios.post(urlTrainWords, {
+                "word": next_word.toString(),
+                "user_key": valid_user_key.toString()
+            })
+                .then(res => console.log(res))
+                .catch(err => console.log(err))
+            /* End of Section */
 
-                                /*== This section delays the user from entering another word for 1 second ==*/
-                                var elemSubmit = document.getElementById('next_word');
-                                elemSubmit.setAttribute("disabled", "disabled");
+            /*== This section delays the user from entering another word for 1 second ==*/
+            var elemSubmit = document.getElementById('next_word');
+            elemSubmit.setAttribute("disabled", "disabled");
 
-                                // Removes disabling after 10 second.
-                                window.setTimeout(function() {
-                                    elemSubmit.removeAttribute("disabled");
-                                }, 10e3);
-                                /* End of section */
-                                break;
-                            }
-                            else if (i == newData.length - 1){
-                                alert("USER KEY INVALID. DO NOT TRY TO GET AROUND THIS")
-                            }
-                        }
-                    }
-                )
+            // Removes disabling after 10 second.
+            window.setTimeout(function() {
+                elemSubmit.removeAttribute("disabled");
+            }, 10e3);
+            /* End of section */
         }
         else{
             /*== This section alerts the user that the input is invalid ==*/
@@ -130,29 +110,26 @@ function InputBox(props){
         if (validationUserKey.isValid){ // Checks if userKey is valid
             props.setUpdate(true);
 
-            /*== This section gets the keys from backend and checks userKey with them ==*/
+            /*== This section posts user key to backend for it to check, then check response code ==*/
             // NOTE: NEED BACKEND FOR ACTUAL TESTING
-            axios.get(urlKey)
-                .then(
-                    (res) => {
-                        let rawData = JSON.parse(JSON.stringify(res.data));
-                        let newData = [];
-                        for (let i = 0; i < rawData.length; i++){
-                            newData.push(rawData[i].key);
-                        }
-                        for (let i = 0; i < newData.length; i++){
-                            if (newData[i] === user_key){
-                                alert("Success! You may now enter words.")
-                                setUserValid(true);
-                                setValidUserKey(user_key);
-                                break;
-                            }
-                            else if (i == newData.length - 1){
-                                alert("User key invalid. Contact admin for key.")
-                            }
-                        }
+            axios.post(urlKey, {
+                "user_key": user_key.toString()
+            })
+                .then(res => {
+                    if (res.status == 200) {
+                        alert("Success! You may now enter words.")
+                        setUserValid(true);
+                        setValidUserKey(user_key);
                     }
-                )
+                    else {
+                        alert("User key invalid. Contact admin for key." + res.status);
+                    }
+                })
+                .catch(err => {
+                    alert("User key invalid. Contact admin for key.");
+                    console.log(err)
+                });
+
             /* End of Section */
         }
         else{

@@ -4,6 +4,7 @@ let keys = ["j9ddj1yepcnrwvfb"];
 
 // Generates numKeys amount of keys
 const generateKeys = (numKeys) => {
+    console.log(keys[0]);
     for (let i = 0; i < numKeys; i++) {
         const id = generateUniqueId({
             length: 16,
