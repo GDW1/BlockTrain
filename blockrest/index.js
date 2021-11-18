@@ -54,13 +54,15 @@ for (let i = 0; i < 6; i++){
 keyGenerator.generateKeys(30)
 
 //GET iterates through keys, formats it as JSON, and sends it back to the frontend
-app.get('/userkeys', (req, res) => {
-    let keyArray = []
-    for (let i = 0; i < keyGenerator.getArray().length; i++){
-        keyArray.push({"key": keyGenerator.getKey(i)})
+//POST takes in user key and checks it with the array of keys and sends the status back to the frontend.
+app.post('/userkeys', (req, res) => {
+    const key = req.body.user_key
+    if (keyGenerator.checkUserKey(key)) {
+        return res.status(200).send("ACCESS GRANTED");
     }
-    let keyArrayJSON = JSON.parse(JSON.stringify(keyArray));
-    return res.status(200).json(keyArrayJSON);
+    else {
+        return res.status(403).send("Forbidden");
+    }
 })
 
 
