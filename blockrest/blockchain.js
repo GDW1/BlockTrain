@@ -1,49 +1,42 @@
-const Block = require('./block');
-//TODO: add functions for verifying_chain_validity and proof_of_work
+const GenesisBlock = require('./GenesisBlock');
+
 class Blockchain {
-    //blockchain class adds new blocks inside the blockchain, starting with the genesis
-    constructor() {
-        this.chain = [this.createGenesisBlock()];
+    constructor(head = null) {
+        this.head = new GenesisBlock(Date.now(), '');
+        //console.log("Genesis hash: " + this.head.hash);
         this.difficulty = 3;
     }
-    //creates the genesis block
-    createGenesisBlock() {
-        return new Block(Date.now(), "Genesis Block", "0");
+
+    // gets the most recent block
+    getLast() {
+        return this.head;
     }
-    //returns the last block
-    getLatestBlock() {
-        return this.chain[this.chain.length-1];
+    // gets the word from the most recent block
+    getData() {
+        return this.head.data;
     }
     //addBlock takes the word and creates a new block with mineBlock
     addBlock(newBlock) {
-        newBlock.lastHash = this.getLatestBlock().hash;
+        newBlock.lastBlock = this.getLast();
+        newBlock.lastHash = this.getLast().hash;
+        //console.log("Previous Hash: " + newBlock.lastHash);
         newBlock.mineBlock(this.difficulty);
-        this.chain.push(newBlock);
-        //console.log(`currlength: ${this.chain.length}`)
-        //console.log(this.chain[this.chain.length - 1])
+        this.head = newBlock;
+        //console.log("Head points to: " + this.head.hash);
     }
     //checks that each hash hasn't changed
     isChainValid(){
-        for (let i=1; i<this.chain.length; i++){
-            const currentBlock = this.chain[i];
-            const previousBlock = this.chain[i-1];
-            if(currentBlock.hash !== currentBlock.calculateHash()) {
+        let currentBlock = this.head;
+        let previousBlock = this.head.lastBlock;
+        while (currentBlock.lastHash !== null) {
+            if (currentBlock.hash !== currentBlock.calculateHash())
                 return false;
-            }
-
-            if(currentBlock.lastHash !== previousBlock.hash) {
+            if (currentBlock.lastHash !== previousBlock.hash)
                 return false;
-            }
+            currentBlock = currentBlock.lastBlock;
+            previousBlock = currentBlock.lastBlock;
         }
         return true;
-    }
-    //getData allows index based access to data in blockchain
-    getData(index){
-        return this.chain[index].data;
-    }
-    //returns current length of blockchain
-    getSize(){
-        return this.chain.length;
     }
     
 }
