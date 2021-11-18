@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import './DisplayFullStory.css';
 import LoadSpinner from './LoadSpinner.js';
-
+var originURL = "http://localhost:3000"
 class FullStoryDisplay extends React.Component{
 
     constructor(props){
@@ -19,7 +19,7 @@ class FullStoryDisplay extends React.Component{
 
     pullData(){
         console.log("pulling");
-        const url = "https://blocktrain-backend.herokuapp.com/trainwords";
+        const url = originURL + "/trainwords";
         //NEEDS BACKEND FOR ACTUAL TESTING
 
         axios.get(url)

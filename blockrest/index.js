@@ -13,7 +13,7 @@ const filter = new Filter();
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-app.use(cors({origin: "https://blocktrain.herokuapp.com"}));
+app.use(cors({origin: "http://localhost:8080"}));
 
 function isProfanity(word) {
 
@@ -39,7 +39,8 @@ function isProfanity(word) {
 
 let gameBlockchains = {};
 //id of global game is 0
-let gameIDs = new Set([0]);
+let gameIDs = new Set();
+gameIDs.add(0);
 
 
 
@@ -61,13 +62,14 @@ app.get('/userkeys', (req, res) => {
 
 
 //INCOMPLETE - Private Game
-app.post('/gameid', (req, res) => {
+app.get('/gameid', (req, res) => {
     let id = 0;
     while (gameIDs.has(id)){
         id = Math.floor(100000 + Math.random() * 900000);
     }
     gameIDs.add(id);
     gameBlockchains[id] = new Blockchain();
+    gameBlockchains[id].createSevenBlocks();
     let idJSON = JSON.parse(JSON.stringify([{"gameID" : id}]));
     return res.status(200).json(idJSON);
 
@@ -93,9 +95,18 @@ app.post('/trainwords', (req, res) => {
 //GET iterates through blockchain, formats it as JSON, and sends it back to the client
 app.get('/trainwords', (req, res) => {
     //iterate through all entries in blockchain
+    let paramID = parseInt(req.query.gameID);
+    console.log(gameIDs);
+    console.log(gameIDs.has(0));
+    console.log(paramID);
+    console.log(gameIDs.has(paramID));
+    if (!gameIDs.has(paramID)){
+        return res.status(404).send("Game with id " + paramID + " not found");
+    }
+    console.log(paramID);
     let rvArray = []
-    for (let i = 0; i < gameBlockchains[0].getSize(); i++){
-        rvArray.push({"word": gameBlockchains[0].getData(i), "wordNum": gameBlockchains[0].getSize()});
+    for (let i = 0; i < gameBlockchains[paramID].getSize(); i++){
+        rvArray.push({"word": gameBlockchains[paramID].getData(i), "wordNum": gameBlockchains[paramID].getSize()});
     } 
     let rvArrayJSON = JSON.parse(JSON.stringify(rvArray));
     //console.log(rvArrayJSON)

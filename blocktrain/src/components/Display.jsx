@@ -7,7 +7,7 @@ import './Display.css';
 import trainArt from '../images/TrainCar.png'
 import axios from 'axios';
 import LoadSpinner from "./LoadSpinner";
-
+var originURL = "http://localhost:3000"
 class Display extends React.Component{
     constructor(props){
         super(props);
@@ -17,9 +17,10 @@ class Display extends React.Component{
                       windowHeight: window.innerHeight,
                       isLoaded: true,
                       counter: 0};
+        
     };
 
-
+    
 
     const
     handleResize = (e) => {
@@ -35,10 +36,12 @@ class Display extends React.Component{
 
     pullData(){
         console.log("pulling");
-        const url = "https://blocktrain-backend.herokuapp.com/trainwords";
+        const url = originURL + "/trainwords";
         //NEEDS BACKEND FOR ACTUAL TESTING
 
-        axios.get(url)
+        axios.get(url, {params: {
+            gameID: this.props.gameID
+        }}) 
             .then(
                 (res) => {
                     let rawData = JSON.parse(JSON.stringify(res.data));

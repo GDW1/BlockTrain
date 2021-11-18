@@ -6,6 +6,8 @@ const Filter = require('bad-words');
 
 const filter = new Filter();
 
+var originURL = "http://localhost:3000"
+
 function validate(rules, stringField){
     //rules are conditions to be checked and accompanying messages
     //rules should have func and message properties
@@ -45,8 +47,10 @@ function InputBox(props){
     const [valid_user_key, setValidUserKey] = useState("");
     const [userValid, setUserValid] = useState(false);
 
-    const urlKey = "https://blocktrain-backend.herokuapp.com/userkeys";
-    const urlTrainWords = "https://blocktrain-backend.herokuapp.com/trainwords";
+    
+
+    const urlKey = originURL + "/userkeys";
+    const urlTrainWords = originURL + "/trainwords";
 
     const handleSubmit = (event) =>{
         event.preventDefault();
@@ -92,7 +96,7 @@ function InputBox(props){
                                 // Removes disabling after 10 second.
                                 window.setTimeout(function() {
                                     elemSubmit.removeAttribute("disabled");
-                                }, 10e3);
+                                }, 10e1);
                                 /* End of section */
                                 break;
                             }
@@ -167,7 +171,7 @@ function InputBox(props){
         setUserKey("");
     }
 
-    if (!userValid) { //CHANGE TO !userValid
+    if (!userValid && props.gameID === 0) { //CHANGE TO !userValid
         return (
             <div className={"InputField"}>
                 <h1>Enter Your User Key</h1>

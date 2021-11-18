@@ -12,7 +12,7 @@ class Blockchain {
 
     createSevenBlocks(){
         for (let i = 0; i < 7; i++){
-            blockchain.addBlock(new Block(Date.now(), ""));
+            this.addBlock(new Block(Date.now(), ""));
             //console.log('Is Data Valid?: ' + blockchain.isChainValid());
         }
     }
