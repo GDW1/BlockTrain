@@ -96,7 +96,7 @@ function InputBox(props){
                                 /* End of section */
                                 break;
                             }
-                            else if (i == newData.length - 1){
+                            else if (i === newData.length - 1){
                                 alert("USER KEY INVALID. DO NOT TRY TO GET AROUND THIS")
                             }
                         }
@@ -147,7 +147,7 @@ function InputBox(props){
                                 setValidUserKey(user_key);
                                 break;
                             }
-                            else if (i == newData.length - 1){
+                            else if (i === newData.length - 1){
                                 alert("User key invalid. Contact admin for key.")
                             }
                         }

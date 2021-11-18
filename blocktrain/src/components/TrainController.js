@@ -9,6 +9,7 @@ class TrainController extends React.Component{
     constructor(props){
         super(props);
         this.state = {update: false}
+        //this.state = {id: 0}
     }
     render(){
         return(

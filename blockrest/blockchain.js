@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 const Block = require('./block');
 //TODO: add functions for verifying_chain_validity and proof_of_work
 class Blockchain {
@@ -5,6 +7,7 @@ class Blockchain {
     constructor() {
         this.chain = [this.createGenesisBlock()];
         this.difficulty = 3;
+        this.nodes = new Set();
     }
     //creates the genesis block
     createGenesisBlock() {
@@ -23,10 +26,10 @@ class Blockchain {
         //console.log(this.chain[this.chain.length - 1])
     }
     //checks that each hash hasn't changed
-    isChainValid(){
-        for (let i=1; i<this.chain.length; i++){
-            const currentBlock = this.chain[i];
-            const previousBlock = this.chain[i-1];
+    isChainValid(checkChain){
+        for (let i=1; i<checkChain.length; i++){
+            const currentBlock = checkChain[i];
+            const previousBlock = checkChain[i-1];
             if(currentBlock.hash !== currentBlock.calculateHash()) {
                 return false;
             }
@@ -45,7 +48,47 @@ class Blockchain {
     getSize(){
         return this.chain.length;
     }
-    
+    reachConsensus(){
+        //checks if any neighboring nodes have a longer, valid chain
+        let maxLength = this.chain.length;
+        let newChain = [];
+        this.nodes.forEach((url) => {
+            let response = axios.get(url.href + '/chain');
+            if (response.status === 200){
+                let currChain = JSON.parse(response);
+                if (currChain.chain.length > maxLength && this.isChainValid(currChain)){
+                    maxLength = currChain.length;
+                    newChain = currChain;
+                }
+
+            }
+        }
+        )
+        if (newChain != []){
+            this.chain = newChain;
+            //chain was replaced by longer chain from another node
+            return true;
+        }
+        //chain is longest valid chain, was not replaced.
+        return false;
+    }
+
+    //adds a new node to this blockchain at address
+    registerNode(address){
+        let nodeURL;
+        try {
+            nodeURL = new URL(address);
+        } catch {
+            return false;
+        }
+        if (nodeURL.protocol === 'http:' || nodeURL.protocol === 'https:'){
+            this.nodes.add(nodeURL);
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }
 
 module.exports = Blockchain;

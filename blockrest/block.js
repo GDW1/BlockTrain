@@ -21,6 +21,7 @@ class Block {
         }
         //console.log("Block mined: " + this.hash);
     }
+    
 }
 
 module.exports = Block;
