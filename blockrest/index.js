@@ -29,9 +29,8 @@ function isProfanity(word) {
     return false;
 }
 
-//const train = require('./routes/train')
-//app.post('/trainwords', train)
 var blockCount = 1;
+
 const blockchain = new Blockchain();
 for (let i = 0; i < 6; i++){
     blockchain.addBlock(new Block(Date.now(), ''));
@@ -42,14 +41,30 @@ for (let i = 0; i < 6; i++){
 keyGenerator.generateKeys(30)
 
 //GET iterates through keys, formats it as JSON, and sends it back to the frontend
-app.get('/userkeys', (req, res) => {
-    let keyArray = []
-    for (let i = 0; i < keyGenerator.getArray().length; i++){
-        keyArray.push({"key": keyGenerator.getKey(i)})
+//POST takes in user key and checks it with the array of keys and sends the status back to the frontend.
+app.post('/userkeys', (req, res) => {
+    const key = req.body.user_key
+    if (keyGenerator.checkUserKey(key)) {
+        return res.status(200).send("ACCESS GRANTED");
     }
-    let keyArrayJSON = JSON.parse(JSON.stringify(keyArray));
-    return res.status(200).json(keyArrayJSON);
+    else {
+        return res.status(403).send("Forbidden");
+    }
 })
+
+
+//INCOMPLETE - Private Game
+/*app.get('/gameid', (req, res) => {
+    let id = 0;
+    while (gameIDs.has(id)){
+        id = Math.floor(100000 + Math.random() * 900000);
+    }
+    gameIDs.add(id);
+    gameBlockchains[id] = new Blockchain();
+    let idJSON = JSON.parse(JSON.stringify([{"gameID" : id}]));
+    return res.status(200).json(idJSON);
+
+})*/
 
 //POST takes in user input and adds it to the blockchain
 app.post('/trainwords', (req, res) => {
@@ -69,9 +84,9 @@ app.post('/trainwords', (req, res) => {
         return res.status(400).send("BAD REQUEST");
     }
 });
-//GET iterates through blockchain, formats it as JSON, and sends it back to the frontend
+//GET iterates through blockchain, formats it as JSON, and sends it back to the client
 app.get('/trainwords', (req, res) => {
-    rvArray = []; 
+    let rvArray = []; 
     //adds all entries into rv, starting with the last block
     tempHead = blockchain.head;
     while (tempHead !== null) {
@@ -87,9 +102,21 @@ app.get('/trainwords', (req, res) => {
     }
 
     rvArrayJSON = JSON.parse(JSON.stringify(rvArray));
+
     //console.log(rvArrayJSON)
     return res.status(200).json(rvArrayJSON)
 });
+
+app.get('/chain', (req, res) => {
+    return res.status(200).send(JSON.stringify(blockchain));
+})
+
+app.post('/register', (req, res) => {
+    const newNodes = req.body.nodes;
+    if (newNodes === null){
+        return res.status(400).send("Please enter a valid list of nodes")
+    }
+})
 
 
 module.exports = app

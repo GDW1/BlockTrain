@@ -5,6 +5,7 @@ class Blockchain {
         this.head = new GenesisBlock(Date.now(), '');
         //console.log("Genesis hash: " + this.head.hash);
         this.difficulty = 3;
+        this.nodes = new Set();
     }
 
     // gets the most recent block
@@ -38,7 +39,7 @@ class Blockchain {
         }
         return true;
     }
-    
+
 }
 
 module.exports = Blockchain;
