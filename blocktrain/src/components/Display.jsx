@@ -35,9 +35,9 @@ class Display extends React.Component{
 
     pullData(){
         console.log("pulling");
-        const url = "http://localhost:3000/trainwords";
+        const url = "https://blocktrain-backend.herokuapp.com/trainwords";
         //NEEDS BACKEND FOR ACTUAL TESTING
-        
+
         axios.get(url)
             .then(
                 (res) => {
@@ -50,14 +50,13 @@ class Display extends React.Component{
                     // this.sampleData = newData;
                     // this.forceUpdate();
                     this.setState({sampleData: newData});
-                    
+
                 }
             )
         if (this.state.counter === 0) {
             this.handleIsLoadedToggle()
             this.setState({counter: 1})
         }
-        
     }
     componentDidMount(){
         this.checkInterval = setInterval(() => {

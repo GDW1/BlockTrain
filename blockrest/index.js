@@ -13,7 +13,7 @@ const filter = new Filter();
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-app.use(cors());
+app.use(cors({origin: "https://blocktrain.herokuapp.com"}));
 
 function isProfanity(word) {
 
