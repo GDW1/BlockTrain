@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import './DisplayFullStory.css';
 import LoadSpinner from './LoadSpinner.js';
-var originURL = "https:/blocktrain-backend.herokuapp.com"
+var originURL = "https://blocktrain-backend.herokuapp.com"
 class FullStoryDisplay extends React.Component{
 
     constructor(props){
