@@ -22,7 +22,9 @@ class FullStoryDisplay extends React.Component{
         const url = originURL + "/trainwords";
         //NEEDS BACKEND FOR ACTUAL TESTING
 
-        axios.get(url)
+        axios.get(url, {params: {
+            gameID: 0
+        }})
             .then(
                 (res) => {
                     let rawData = JSON.parse(JSON.stringify(res.data));

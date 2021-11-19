@@ -81,7 +81,7 @@ function GameButtons(props){
     }
     window.addEventListener('resize', handleResize, [])
     let pageFormat;
-    if (windowHeight / windowWidth < 1.5) {
+    if (windowHeight / windowWidth < 1) {
         pageFormat = "buttonBox"   
     }
     else
