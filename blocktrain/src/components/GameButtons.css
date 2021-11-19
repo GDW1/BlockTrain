@@ -1,3 +1,34 @@
 .button{
     color: gray;
 }
+#inputIDBox{
+    text-align: center;
+}
+#buttonBox{
+    background-color: var(--secondary);
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    margin: 10px;
+    margin-right: 0px;
+    padding: 10px;
+    display: flexbox;
+    float: right
+}
+
+#buttonBoxMobile{
+    background-color: var(--secondary);
+    padding: 10px;
+    display: flexbox;
+}
+.whiteText {
+    color: white;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+input[type=number] {
+    -moz-appearance:textfield;
+}

@@ -33,7 +33,7 @@ function Instructions() {
             <div className="instructions">
                 <div id="text">
                     <h1>Welcome.</h1>
-                    <p>1. Enter your user key</p>
+                    <p>1. Enter your user key or create a private game</p>
                     <p>2. Enter a word</p>
                     <p> - Only alphabetic characters are allowed</p>
                     <p> - No profanities</p>
@@ -52,7 +52,7 @@ function Instructions() {
             <div className="instructionsMobile">
                 <div id="textMobile">
                     <h1>Welcome.</h1>
-                    <p>1. Enter your user key</p>
+                    <p>1. Enter your user key or create a private game</p>
                     <p>2. Enter a word</p>
                     <p> - Only alphabetic characters are allowed</p>
                     <p> - No profanities</p>

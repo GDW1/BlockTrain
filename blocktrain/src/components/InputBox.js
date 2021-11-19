@@ -71,7 +71,8 @@ function InputBox(props){
 
             axios.post(urlTrainWords, {
                 "word": next_word.toString(),
-                "user_key": valid_user_key.toString()
+                "user_key": valid_user_key.toString(),
+                "gameID" : props.gameID
             })
                 .then(res => console.log(res))
                 .catch(err => console.log(err))

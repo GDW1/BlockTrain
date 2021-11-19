@@ -64,6 +64,15 @@ app.post('/userkeys', (req, res) => {
 
 
 //INCOMPLETE - Private Game
+//params should be in form 
+/*
+    {
+        params: {
+            gameID: this.props.gameID
+        }
+    }
+
+*/
 app.get('/gameid', (req, res) => {
     let id = 0;
     while (gameIDs.has(id)){
@@ -76,32 +85,39 @@ app.get('/gameid', (req, res) => {
     return res.status(200).json(idJSON);
 
 })
+//
+app.post('/gameid', (req, res) => {
+    let id = parseInt(req.body.gameID)
+    if (id === NaN || !gameIDs.has(id)){
+        return res.status(400).send("BAD REQUEST: invalid game ID")
+    }
+    else{
+        return res.status(200).send("game with id " + id + " exists")
+    }
 
+})
 //POST takes in user input and adds it to the blockchain
 app.post('/trainwords', (req, res) => {
     const userWord = req.body.word
     const key = req.body.user_key
-    if (keyGenerator.checkUserKey(key)) {
+    const paramID = parseInt(req.body.gameID);
+    if (keyGenerator.checkUserKey(key) || paramID !== 0) {
         if (!isProfanity(userWord)) {
-            gameBlockchains[0].addBlock(new Block(Date.now(), userWord));
+            gameBlockchains[paramID].addBlock(new Block(Date.now(), userWord));
             return res.status(200).send("Created resource with " + userWord);
         }
         else {
-            return res.status(403).send("Forbidden");
+            return res.status(403).send("Forbidden: no profanity");
         }
     }
     else{
-        return res.status(400).send("BAD REQUEST");
+        return res.status(400).send("BAD REQUEST: invalid user key");
     }
 });
 //GET iterates through blockchain, formats it as JSON, and sends it back to the client
 app.get('/trainwords', (req, res) => {
     //iterate through all entries in blockchain
     let paramID = parseInt(req.query.gameID);
-    console.log(gameIDs);
-    console.log(gameIDs.has(0));
-    console.log(paramID);
-    console.log(gameIDs.has(paramID));
     if (!gameIDs.has(paramID)){
         return res.status(404).send("Game with id " + paramID + " not found");
     }

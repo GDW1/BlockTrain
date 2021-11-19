@@ -15,8 +15,8 @@ class TrainController extends React.Component{
     render(){
         return(
             <div>
-                <GameButtons gameID = {this.state.gameID} setGameID = {(e) => this.setState({gameID: e})}/>
-                <p>current game ID: {this.state.gameID}</p>
+                <GameButtons gameID = {this.state.gameID} setGameID = {(e) => this.setState({gameID: e})} update = {this.state.update} setUpdate = {(e) => {this.setState({update: e})}}/>
+                
                 <InputBox update = {this.state.update} setUpdate = {(e) => {this.setState({update: e})}} gameID = {this.state.gameID}/>
                 <Display update = {this.state.update} setUpdate = {(e) => {this.setState({update: e})}} gameID = {this.state.gameID}/>
             </div>
