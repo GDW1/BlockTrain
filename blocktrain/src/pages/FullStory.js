@@ -5,14 +5,14 @@ import './FullStory.css';
 import Header from '../components/Header.jsx'
 import DisplayFullStory from '../components/DisplayFullStory.jsx';
 
-function FullStory() {
+function FullStory(props) {
 
     return (
         <div className="FullStory">
             <Header/>
             <div id="text">
                 <h1 id="header">Full Story</h1>
-                <DisplayFullStory />
+                <DisplayFullStory gameID = {props.gameID} setGameID = {props.setGameID} />
             </div>
         </div>
     );

@@ -23,7 +23,7 @@ class FullStoryDisplay extends React.Component{
         //NEEDS BACKEND FOR ACTUAL TESTING
 
         axios.get(url, {params: {
-            gameID: 0
+            gameID: this.props.gameID
         }})
             .then(
                 (res) => {
