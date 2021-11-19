@@ -7,7 +7,7 @@ import './Display.css';
 import trainArt from '../images/TrainCar.png'
 import axios from 'axios';
 import LoadSpinner from "./LoadSpinner";
-var originURL = "http://localhost:3000"
+var originURL = "https:/blocktrain-backend.herokuapp.com"
 class Display extends React.Component{
     constructor(props){
         super(props);

@@ -6,7 +6,7 @@ const Filter = require('bad-words');
 
 const filter = new Filter();
 
-var originURL = "http://localhost:3000"
+var originURL = "https:/blocktrain-backend.herokuapp.com"
 
 function validate(rules, stringField){
     //rules are conditions to be checked and accompanying messages

@@ -2,7 +2,7 @@ import './GameButtons.css'
 import react, { useEffect, useState } from 'react';
 import axios from 'axios'
 import validator from 'validator';
-var originURL = "http://localhost:3000";
+var originURL = "https:/blocktrain-backend.herokuapp.com";
 
 
 
