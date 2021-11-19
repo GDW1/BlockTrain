@@ -8,7 +8,8 @@ import react, { useState } from 'react'
 import Home from './pages/Home.js'
 import AboutUs from './pages/AboutUs.js'
 import FullStory from './pages/FullStory.js'
-
+import axios from "axios";
+axios.baseURL = ""
 function App() {
   const [gameID, setGameID] = useState(0);
   return (
