@@ -49,8 +49,8 @@ function InputBox(props){
 
     
 
-    const urlKey = originURL + "/userkeys";
-    const urlTrainWords = originURL + "/trainwords";
+    const urlKey = "https://blocktrain-backend.herokuapp.com/userkeys";
+    const urlTrainWords = "https://blocktrain-backend.herokuapp.com/trainwords";
 
     const handleSubmit = (event) =>{
         event.preventDefault();

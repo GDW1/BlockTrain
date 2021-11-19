@@ -36,7 +36,7 @@ class Display extends React.Component{
 
     pullData(){
         console.log("pulling");
-        const url = originURL + "/trainwords";
+        const url = "https://blocktrain-backend.herokuapp.com/trainwords";
         //NEEDS BACKEND FOR ACTUAL TESTING
 
         axios.get(url, {params: {

@@ -28,7 +28,7 @@ function GameButtons(props){
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [windowHeight, setWindowHeight] = useState(window.innerHeight);
     const handleCreateGame = (() => {
-        axios.get(originURL + "/gameid")
+        axios.get("https://blocktrain-backend.herokuapp.com/trainwords/gameid")
             .then((res) => {
                 //console.log(JSON.parse(JSON.stringify(res.data)));
                 //alert("received " + JSON.parse(JSON.stringify(res.data))[0]['gameID']);
@@ -52,7 +52,7 @@ function GameButtons(props){
         
         if (validationGameID.isValid){
             props.setUpdate(true);
-            axios.post(originURL + "/gameid", {"gameID": possibleID})
+            axios.post("https://blocktrain-backend.herokuapp.com/trainwords/gameid", {"gameID": possibleID})
             .then((res) => {
                 if (res.status == 200){
                     alert("successfully joined game " + possibleID);
