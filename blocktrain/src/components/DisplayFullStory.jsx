@@ -27,7 +27,7 @@ class FullStoryDisplay extends React.Component{
                 (res) => {
                     let rawData = JSON.parse(JSON.stringify(res.data));
                     let newData = [];
-                    for (let i = 7; i < rawData[rawData.length - 1].wordNum; i++){
+                    for (let i = 7; i < rawData.length; i++){
                         newData.push(rawData[i].word + " ");
                     }
                     // this.sampleData = newData;

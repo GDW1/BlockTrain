@@ -1,19 +1,17 @@
 const keyGenerator = require('./keyGenerator')
 const Blockchain = require('./blockchain');
 const Block = require('./block');
+const Filter = require('bad-words');
 const express = require('express');
 const app = express();
-const fs = require('fs')
-const Filter = require('bad-words');
+
 var cors = require('cors');
-const { ppid } = require('process');
-
-const filter = new Filter();
-
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 app.use(cors({origin: "http://localhost:8080"}));
+
+const filter = new Filter();
 
 function isProfanity(word) {
 
@@ -46,6 +44,8 @@ gameIDs.add(0);
 
 gameBlockchains[0] = new Blockchain();
 gameBlockchains[0].createSevenBlocks();
+var blockCount = 1;
+
 
 //Generates Keys, change 10 to environmental variable
 keyGenerator.generateKeys(30)
@@ -104,6 +104,7 @@ app.post('/trainwords', (req, res) => {
     if (keyGenerator.checkUserKey(key) || paramID !== 0) {
         if (!isProfanity(userWord)) {
             gameBlockchains[paramID].addBlock(new Block(Date.now(), userWord));
+            blockCount++;
             return res.status(200).send("Created resource with " + userWord);
         }
         else {
@@ -121,12 +122,24 @@ app.get('/trainwords', (req, res) => {
     if (!gameIDs.has(paramID)){
         return res.status(404).send("Game with id " + paramID + " not found");
     }
-    console.log(paramID);
+    //console.log(paramID);
     let rvArray = []
-    for (let i = 0; i < gameBlockchains[paramID].getSize(); i++){
-        rvArray.push({"word": gameBlockchains[paramID].getData(i), "wordNum": gameBlockchains[paramID].getSize()});
-    } 
+    //adds all entries into rv, starting with the last block
+    tempHead = gameBlockchains[paramID].head;
+    while (tempHead !== null) {
+        rvArray.push({ "word" : tempHead.data, "wordNum" : blockCount});
+        tempHead = tempHead.lastBlock;
+    }
+    //reverse the array since it starts with the last block
+    const size = rvArray.length;
+    for (let i=0; i<size/2; i++) {
+        temp = rvArray[i];
+        rvArray[i] = rvArray[rvArray.length-i-1];
+        rvArray[rvArray.length-i-1] = temp;
+    }
+
     let rvArrayJSON = JSON.parse(JSON.stringify(rvArray));
+
     //console.log(rvArrayJSON)
     return res.status(200).json(rvArrayJSON)
 });
