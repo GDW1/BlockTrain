@@ -6,6 +6,8 @@ const Filter = require('bad-words');
 
 const filter = new Filter();
 
+var originURL = "http://localhost:3000"
+
 function validate(rules, stringField){
     //rules are conditions to be checked and accompanying messages
     //rules should have func and message properties
@@ -45,8 +47,10 @@ function InputBox(props){
     const [valid_user_key, setValidUserKey] = useState("");
     const [userValid, setUserValid] = useState(false);
 
-    const urlKey = "http://localhost:3000/userkeys";
-    const urlTrainWords = "http://localhost:3000/trainwords";
+    
+
+    const urlKey = originURL + "/userkeys";
+    const urlTrainWords = originURL + "/trainwords";
 
     const handleSubmit = (event) =>{
         event.preventDefault();
@@ -56,7 +60,7 @@ function InputBox(props){
                 {func: validator.isAlpha, message: "Input must contain only letters"},
                 {func: (inp) => !validator.isEmpty(inp), message: "Input cannot be empty"},
                 {func: (inp) => !isProfanity(inp), message: "Input cannot contain profanity"}
-                
+
             ],
             next_word.toString()
         );
@@ -67,7 +71,8 @@ function InputBox(props){
 
             axios.post(urlTrainWords, {
                 "word": next_word.toString(),
-                "user_key": valid_user_key.toString()
+                "user_key": valid_user_key.toString(),
+                "gameID" : props.gameID
             })
                 .then(res => console.log(res))
                 .catch(err => console.log(err))
@@ -80,7 +85,8 @@ function InputBox(props){
             // Removes disabling after 10 second.
             window.setTimeout(function() {
                 elemSubmit.removeAttribute("disabled");
-            }, 10e3);
+            }, 10);
+            //CHANGE BACK TO LONGER DELAY
             /* End of section */
         }
         else{
@@ -144,7 +150,7 @@ function InputBox(props){
         setUserKey("");
     }
 
-    if (!userValid) { //CHANGE TO !userValid
+    if (!userValid && props.gameID === 0) { //CHANGE TO !userValid
         return (
             <div className={"InputField"}>
                 <h1>Enter Your User Key</h1>

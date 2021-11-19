@@ -1,3 +1,5 @@
+const Block = require('./block')
+
 const GenesisBlock = require('./GenesisBlock');
 
 class Blockchain {
@@ -8,7 +10,17 @@ class Blockchain {
         this.nodes = new Set();
     }
 
+    createSevenBlocks(){
+        for (let i = 0; i < 7; i++){
+            this.addBlock(new Block(Date.now(), ""));
+            //console.log('Is Data Valid?: ' + blockchain.isChainValid());
+        }
+    }
+    //creates the genesis block
+    createGenesisBlock() {
+        return new Block(Date.now(), "", "0");
     // gets the most recent block
+    }
     getLast() {
         return this.head;
     }

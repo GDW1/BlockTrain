@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import './DisplayFullStory.css';
 import LoadSpinner from './LoadSpinner.js';
-
+var originURL = "http://localhost:3000"
 class FullStoryDisplay extends React.Component{
 
     constructor(props){
@@ -19,16 +19,17 @@ class FullStoryDisplay extends React.Component{
 
     pullData(){
         console.log("pulling");
-        const url = "http://localhost:3000/trainwords";
-
+        const url = originURL + "/trainwords";
         //NEEDS BACKEND FOR ACTUAL TESTING
-        
-        axios.get(url)
+
+        axios.get(url, {params: {
+            gameID: this.props.gameID
+        }})
             .then(
                 (res) => {
                     let rawData = JSON.parse(JSON.stringify(res.data));
                     let newData = [];
-                    for (let i = 7; i < rawData[rawData.length - 1].wordNum; i++){
+                    for (let i = 7; i < rawData.length; i++){
                         newData.push(rawData[i].word + " ");
                     }
                     // this.sampleData = newData;
@@ -42,8 +43,6 @@ class FullStoryDisplay extends React.Component{
             this.handleIsLoadedToggle()
             this.setState({counter: 1})
         }
-
-        
     }
     componentDidMount(){
         this.checkInterval = setInterval(() => {
@@ -64,7 +63,7 @@ class FullStoryDisplay extends React.Component{
 
         }
         return (
-            
+
             <div className={"displayComponent"}>
                 <p>{this.state.sampleData}</p>
                 { this.state.isLoaded && <LoadSpinner />}
@@ -73,4 +72,4 @@ class FullStoryDisplay extends React.Component{
     }
 }
 
-export default FullStoryDisplay; 
+export default FullStoryDisplay;

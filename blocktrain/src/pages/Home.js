@@ -7,14 +7,14 @@ import Instructions from '../components/Instructions.jsx'
 import TrainController from '../components/TrainController';
 import React, {useState} from 'react';
 
-function Home() {
-    const[currentID, setCurrentID] = useState(0);
+function Home(props) {
+    //const[currentID, setCurrentID] = useState(0);
     return (
         <div className="Home">
             <Header/>
             <div className="body">
                 <Instructions id="background"/>
-                <TrainController id="foreground"/>
+                <TrainController id="foreground" gameID = {props.gameID} setGameID = {props.setGameID} />
             </div>
         </div>
     );

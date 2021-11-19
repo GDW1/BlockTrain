@@ -8,7 +8,8 @@ const app = express();
 var cors = require('cors');
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use(cors());
+
+app.use(cors({origin: "http://localhost:8080"}));
 
 const filter = new Filter();
 
@@ -29,13 +30,22 @@ function isProfanity(word) {
     return false;
 }
 
+//const train = require('./routes/train')
+//app.post('/trainwords', train)
+
+//INCOMPLETE - Private Game
+
+let gameBlockchains = {};
+//id of global game is 0
+let gameIDs = new Set();
+gameIDs.add(0);
+
+
+
+gameBlockchains[0] = new Blockchain();
+gameBlockchains[0].createSevenBlocks();
 var blockCount = 1;
 
-const blockchain = new Blockchain();
-for (let i = 0; i < 6; i++){
-    blockchain.addBlock(new Block(Date.now(), ''));
-    blockCount++;
-}
 
 //Generates Keys, change 10 to environmental variable
 keyGenerator.generateKeys(30)
@@ -54,41 +64,68 @@ app.post('/userkeys', (req, res) => {
 
 
 //INCOMPLETE - Private Game
-/*app.get('/gameid', (req, res) => {
+//params should be in form 
+/*
+    {
+        params: {
+            gameID: this.props.gameID
+        }
+    }
+
+*/
+app.get('/gameid', (req, res) => {
     let id = 0;
     while (gameIDs.has(id)){
         id = Math.floor(100000 + Math.random() * 900000);
     }
     gameIDs.add(id);
     gameBlockchains[id] = new Blockchain();
+    gameBlockchains[id].createSevenBlocks();
     let idJSON = JSON.parse(JSON.stringify([{"gameID" : id}]));
     return res.status(200).json(idJSON);
 
-})*/
+})
+//
+app.post('/gameid', (req, res) => {
+    let id = parseInt(req.body.gameID)
+    if (id === NaN || !gameIDs.has(id)){
+        return res.status(400).send("BAD REQUEST: invalid game ID")
+    }
+    else{
+        return res.status(200).send("game with id " + id + " exists")
+    }
 
+})
 //POST takes in user input and adds it to the blockchain
 app.post('/trainwords', (req, res) => {
     const userWord = req.body.word
     const key = req.body.user_key
-    if (keyGenerator.checkUserKey(key)) {
+    const paramID = parseInt(req.body.gameID);
+    if (keyGenerator.checkUserKey(key) || paramID !== 0) {
         if (!isProfanity(userWord)) {
-            blockchain.addBlock(new Block(Date.now(), userWord));
+            gameBlockchains[paramID].addBlock(new Block(Date.now(), userWord));
             blockCount++;
             return res.status(200).send("Created resource with " + userWord);
         }
         else {
-            return res.status(403).send("Forbidden");
+            return res.status(403).send("Forbidden: no profanity");
         }
     }
     else{
-        return res.status(400).send("BAD REQUEST");
+        return res.status(400).send("BAD REQUEST: invalid user key");
     }
 });
 //GET iterates through blockchain, formats it as JSON, and sends it back to the client
 app.get('/trainwords', (req, res) => {
-    let rvArray = []; 
+    //iterate through all entries in blockchain
+    let paramID = parseInt(req.query.gameID);
+    if (!gameIDs.has(paramID)){
+        return res.status(404).send("Game with id " + paramID + " not found");
+    }
+    //console.log(paramID);
+    let rvArray = []
     //adds all entries into rv, starting with the last block
-    tempHead = blockchain.head;
+    tempHead = gameBlockchains[paramID].head;
     while (tempHead !== null) {
         rvArray.push({ "word" : tempHead.data, "wordNum" : blockCount});
         tempHead = tempHead.lastBlock;
@@ -101,14 +138,14 @@ app.get('/trainwords', (req, res) => {
         rvArray[rvArray.length-i-1] = temp;
     }
 
-    rvArrayJSON = JSON.parse(JSON.stringify(rvArray));
+    let rvArrayJSON = JSON.parse(JSON.stringify(rvArray));
 
     //console.log(rvArrayJSON)
     return res.status(200).json(rvArrayJSON)
 });
 
 app.get('/chain', (req, res) => {
-    return res.status(200).send(JSON.stringify(blockchain));
+    return res.status(200).send(JSON.stringify(gameBlockchains[0]));
 })
 
 app.post('/register', (req, res) => {
