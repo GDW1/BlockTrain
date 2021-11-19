@@ -1,6 +1,6 @@
 const Block = require('./block')
 
-const GenesisBlock = require('./GenesisBlock');
+const GenesisBlock = require('./genesisBlock');
 
 class Blockchain {
     constructor(head = null) {
